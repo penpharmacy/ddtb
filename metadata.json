@@ -1,0 +1,8 @@
+{
+  "name": "Copy of YaDee (ยาดี) - Medication Tracker",
+  "description": "แอปพลิเคชันช่วยเตือนทานยา บันทึกประวัติ และรายงานผลข้างเคียงให้เภสัชกร รองรับการทำงานแบบออฟไลน์",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
