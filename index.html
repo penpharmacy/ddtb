@@ -1,246 +1,1474 @@
 <!DOCTYPE html>
 <html lang="th">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>YaDee - Medication Tracker</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Sarabun', sans-serif;<!DOCTYPE html>
-<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Wheel - วงล้อสุ่มนำโชค</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #ff4757;
-            --secondary-color: #2ed573;
-            --bg-color: #f1f2f6;
-        }
-
-        body {
-            font-family: 'Kanit', sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        .main-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            padding: 20px;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        /* Wheel Styling */
-        .wheel-container {
-            position: relative;
-            width: 400px;
-            height: 400px;
-        }
-
-        #wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 10px solid #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
-        }
-
-        .pointer {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
-            clip-path: polygon(50% 100%, 0 0, 100% 0);
-            z-index: 10;
-        }
-
-        /* Control Panel */
-        .controls {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            width: 300px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            padding: 10px;
-            font-family: 'Kanit', sans-serif;
-            font-size: 16px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-bottom: 10px;
-        }
-
-        .btn-spin { background: var(--secondary-color); color: white; }
-        .btn-spin:hover { background: #26af5f; transform: scale(1.02); }
-        .btn-update { background: #57606f; color: white; font-size: 14px; }
-
-        .winner-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.3);
-            z-index: 100;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .winner-popup.active { transform: translate(-50%, -50%) scale(1); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบเรียนรู้ด้วยตนเอง E-Learning System (GAS + Sheets)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<style>
+:root{--primary-navy:#1E3A8A;--primary-blue:#3B82F6;--accent-pink:#EC4899;--accent-pink-light:#F472B6;--bg-soft:#F8FAFC;--card-shadow:0 10px 15px -3px rgba(0,0,0,.05),0 4px 6px -2px rgba(0,0,0,.025);--hover-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04)}
+body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);color:#334155;min-height:100vh}
+.bg-gradient-blue-pink{background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 50%,#EC4899 100%)}
+.text-gradient{background:linear-gradient(135deg,#1E3A8A,#EC4899);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.card-custom{border:none;border-radius:1rem;box-shadow:var(--card-shadow);transition:transform .2s ease,box-shadow .2s ease;background:#fff}
+.card-custom:hover{transform:translateY(-3px);box-shadow:var(--hover-shadow)}
+.btn-primary-custom{background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 100%);border:none;color:#fff;font-weight:500;border-radius:.5rem;padding:.5rem 1.25rem}
+.btn-primary-custom:hover{background:linear-gradient(135deg,#1D4ED8 0%,#2563EB 100%);color:#fff}
+.btn-pink-custom{background:linear-gradient(135deg,#EC4899 0%,#F472B6 100%);border:none;color:#fff;font-weight:500;border-radius:.5rem;padding:.5rem 1.25rem}
+.btn-pink-custom:hover{background:linear-gradient(135deg,#DB2777 0%,#E11D48 100%);color:#fff}
+.sidebar{background:#fff;border-right:1px solid #E2E8F0;transition:all .3s ease}
+@media (min-width:768px){.sidebar{min-height:calc(100vh - 70px);position:sticky;top:70px}}
+.nav-link-custom{color:#64748B;padding:.75rem 1.25rem;border-radius:.5rem;margin-bottom:.25rem;display:flex;align-items:center;gap:.75rem;font-weight:500;transition:all .2s}
+.nav-link-custom:hover,.nav-link-custom.active{color:#1E3A8A;background:#EFF6FF;font-weight:600}
+.nav-link-custom.active{border-left:4px solid #EC4899}
+.notification-dropdown{max-height:400px;overflow-y:auto;width:350px}
+.notification-item{white-space:normal;border-bottom:1px solid #f1f5f9}
+.notification-item:last-child{border-bottom:none}
+.notification-item.unread{background-color:#f8fafc}
+.notification-item .fs-8{font-size:.75rem}
+.cert-preview-container{border:1px dashed #ccc;min-height:400px}
+.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:skeleton-loading 1.5s infinite;border-radius:.25rem}
+@keyframes skeleton-loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@media (max-width:767.98px){.sidebar{width:100% !important;min-height:auto;border-right:none;border-bottom:1px solid #E2E8F0}.cert-inner-box{padding:15px !important}.cert-title{font-size:1.5rem !important}.cert-user-name{font-size:1.25rem !important}}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 50%,#EC4899 100%);padding:1rem}
+</style>
 </head>
 <body>
 
-    <h1 style="color: #2f3542;">🎡 วงล้อสุ่มผู้โชคดี</h1>
-
-    <div class="main-container">
-        <div class="wheel-container">
-            <div class="pointer"></div>
-            <canvas id="wheel"></canvas>
+<div id="loginScreen" class="login-screen" style="display:none;">
+    <div class="card card-custom p-4 p-md-5" style="max-width:420px;width:100%;">
+        <div class="text-center mb-4">
+            <i class="bi bi-mortarboard-fill text-primary" style="font-size:3rem;"></i>
+            <h4 class="fw-bold text-primary mt-2" id="loginTitle">ระบบ E-Learning</h4>
+            <p class="text-muted fs-7">เข้าสู่ระบบเพื่อเริ่มการเรียนรู้</p>
         </div>
+        <form id="formLogin">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">อีเมล</label>
+                <input type="email" class="form-control" id="loginEmail" required placeholder="you@example.com" autocomplete="username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">รหัสผ่าน</label>
+                <input type="password" class="form-control" id="loginPassword" required placeholder="รหัสผ่าน" autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100 mb-2"><i class="bi bi-box-arrow-in-right me-1"></i>เข้าสู่ระบบ</button>
+            <button type="button" class="btn btn-outline-secondary w-100" onclick="continueAsGuest()"><i class="bi bi-arrow-left me-1"></i>กลับไปหน้าแรก (Guest)</button>
+        </form>
+        <hr>
+        <!-- <p class="text-center text-muted fs-8 mb-2">บัญชีสาธิต (Demo)</p>
+        <div class="d-grid gap-2">
+            <button class="btn btn-outline-primary btn-sm" onclick="quickLogin('admin@elearn.com','123456')">Admin: admin@elearn.com / 123456</button>
+            <button class="btn btn-outline-success btn-sm" onclick="quickLogin('teacher@elearn.com','123456')">Teacher: teacher@elearn.com / 123456</button>
+            <button class="btn btn-outline-danger btn-sm" onclick="quickLogin('student@elearn.com','123456')">Student: student@elearn.com / 123456</button>
+        </div> -->
+    </div>
+</div>
 
-        <div class="controls">
-            <h3>รายการตัวเลข/ชื่อ</h3>
-            <textarea id="itemsInput" placeholder="ใส่ชื่อหรือเลข แยกบรรทัดกัน">เลข 1
-เลข 2
-เลข 3
-เลข 4
-เลข 5</textarea>
-            <button class="btn btn-update" onclick="updateWheel()">อัปเดตข้อมูล</button>
-            <button id="spinBtn" class="btn btn-spin" onclick="spinWheel()">หมุนวงล้อ!</button>
-            <p id="status" style="text-align: center; color: #777;">เหลือทั้งหมด: 5 รายการ</p>
+<div id="mainApp" style="display:none;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient-blue-pink sticky-top shadow-sm">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <i class="bi bi-mortarboard-fill fs-3 text-warning"></i>
+            <div>
+                <div class="fw-bold fs-5 leading-none" id="navTitle1">ระบบ E-Learning</div>
+                <small class="fs-7 opacity-75 d-block" id="navTitle2">เรียนรู้ด้วยตนเอง 24 ชม.</small>
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ms-auto align-items-center gap-3">
+                <li class="nav-item dropdown" id="notificationBell" style="display:none;">
+                    <a class="nav-link text-white position-relative" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell-fill fs-5"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount" style="font-size:.6em;padding:.3em .5em;">0</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 notification-dropdown p-0">
+                        <li class="p-3 border-bottom"><h6 class="mb-0 fw-bold">การแจ้งเตือน</h6></li>
+                        <div id="notificationList"></div>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <span class="badge bg-white text-dark px-3 py-2 rounded-pill shadow-sm" id="userRoleBadge">
+                        <i class="bi bi-person-circle me-1 text-primary"></i> <span id="lblUserName">ผู้ใช้งานทั่วไป</span>
+                    </span>
+                </li>
+                <li class="nav-item" id="btnLoginItem" style="display:none;">
+                    <button class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="showLogin()">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> เข้าสู่ระบบ
+                    </button>
+                </li>
+                <li class="nav-item" id="btnLogoutItem">
+                    <button class="btn btn-pink-custom btn-sm rounded-pill px-3" onclick="handleLogout()">
+                        <i class="bi bi-box-arrow-right me-1"></i> ออกจากระบบ
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
 
-    <div id="winnerPopup" class="winner-popup">
-        <h2 style="margin:0; color: #777;">ยินดีด้วย!</h2>
-        <h1 id="winnerName" style="font-size: 3rem; color: var(--primary-color); margin: 10px 0;">?</h1>
-        <p>ต้องการนำชื่อนี้ออกจากวงล้อหรือไม่?</p>
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <button class="btn btn-spin" onclick="confirmRemove(true)">ลบออก</button>
-            <button class="btn btn-update" onclick="confirmRemove(false)">เก็บไว้</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-2 px-3 py-4 sidebar" id="sidebarContainer">
+            <div class="d-flex flex-column gap-1" id="sidebarMenu"></div>
         </div>
+        <main class="col-md-9 col-lg-10 ms-sm-auto px-md-4 py-4" id="mainContainer">
+            <div class="alert alert-gradient bg-white border-start border-4 border-primary shadow-sm rounded-3 mb-4 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between p-3 gap-2" id="announcementBox">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="p-2 bg-primary bg-opacity-10 text-primary rounded-circle flex-shrink-0">
+                        <i class="bi bi-megaphone-fill fs-4"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-primary">ประชาสัมพันธ์</h6>
+                        <p class="mb-0 text-muted fs-7" id="announcementText">ยินดีต้อนรับสู่ระบบ E-Learning</p>
+                    </div>
+                </div>
+                <span class="badge bg-light text-secondary border fs-8 text-nowrap align-self-start align-self-sm-center" id="lblCurrentTime">Asia/Bangkok</span>
+            </div>
+            <div id="viewContainer"></div>
+        </main>
     </div>
+</div>
+</div>
 
-    <script>
-        const canvas = document.getElementById('wheel');
-        const ctx = canvas.getContext('2d');
-        let items = [];
-        let currentRotation = 0;
-        let isSpinning = false;
-        let selectedIdx = null;
+<div class="modal fade" id="userModal" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content border-0 shadow-lg rounded-4">
+<div class="modal-header bg-gradient-blue-pink text-white rounded-top-4">
+<h5 class="modal-title fw-bold" id="userModalTitle"><i class="bi bi-person-plus-fill me-2"></i>จัดการผู้ใช้งาน</h5>
+<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-4">
+<form id="formUser" novalidate>
+<input type="hidden" id="userId">
+<div class="mb-3"><label class="form-label fw-semibold">ชื่อ-นามสกุล</label><input type="text" class="form-control" id="userFullName" required placeholder="นายสมชาย ใจดี"></div>
+<div class="mb-3"><label class="form-label fw-semibold">อีเมล (Email)</label><input type="email" class="form-control" id="userEmail" required placeholder="somchai@example.com" autocomplete="username"></div>
+<div class="mb-3"><label class="form-label fw-semibold">รหัสผ่าน (Password)</label><input type="password" class="form-control" id="userPassword" placeholder="เว้นว่างถ้าไม่ต้องการเปลี่ยน" autocomplete="new-password"></div>
+<div class="mb-3"><label class="form-label fw-semibold">สิทธิ์การใช้งาน (Role)</label>
+<select class="form-select" id="userRole" required><option value="Student">Student (นักเรียน)</option><option value="Teacher">Teacher (ครู/ผู้สอน)</option><option value="Admin">Admin (ผู้ดูแลระบบ)</option></select></div>
+<div class="mb-3"><label class="form-label fw-semibold">สถานะ (Status)</label>
+<select class="form-select" id="userStatus" required><option value="Active">Active (ใช้งาน)</option><option value="Inactive">Inactive (ระงับการใช้งาน)</option></select></div>
+<div class="d-flex justify-content-end gap-2 mt-4"><button type="button" class="btn btn-light" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-primary-custom">บันทึกข้อมูล</button></div>
+</form>
+</div>
+</div>
+</div>
+</div>
 
-        const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#3742fa', '#70a1ff', '#eccc68', '#ff7f50'];
+<div class="modal fade" id="courseModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content border-0 shadow-lg rounded-4">
+<div class="modal-header bg-gradient-blue-pink text-white rounded-top-4">
+<h5 class="modal-title fw-bold" id="courseModalTitle"><i class="bi bi-journal-plus me-2"></i>จัดการคอร์สเรียน</h5>
+<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-4">
+<form id="formCourse" novalidate>
+<input type="hidden" id="courseId">
+<div class="row g-3">
+<div class="col-md-8"><label class="form-label fw-semibold">ชื่อหลักสูตร / คอร์ส</label><input type="text" class="form-control" id="courseName" required placeholder="เช่น ความรู้พื้นฐานเรื่องการใช้ยาอย่างปลอดภัย"></div>
+<div class="col-md-4"><label class="form-label fw-semibold">คะแนนผ่านเกณฑ์ (%)</label><input type="number" class="form-control" id="coursePassScore" min="0" max="100" value="70" required></div>
+<div class="col-12"><label class="form-label fw-semibold">คำอธิบายรายวิชา</label><textarea class="form-control" id="courseDescription" rows="3" placeholder="อธิบายรายละเอียดเกี่ยวกับคอร์สเรียนนี้..."></textarea></div>
+<div class="col-md-8"><label class="form-label fw-semibold">ลิงก์รูปภาพปก (Cover Image URL)</label><input type="url" class="form-control" id="courseCoverImage" placeholder="https://images.unsplash.com/..."></div>
+<div class="col-md-4"><label class="form-label fw-semibold">สถานะคอร์ส</label><select class="form-select" id="courseStatus"><option value="Open">Open (เปิดรับสมัคร)</option><option value="Closed">Closed (ปิดรับสมัคร)</option></select></div>
+</div>
+<div class="d-flex justify-content-end gap-2 mt-4"><button type="button" class="btn btn-light" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-primary-custom">บันทึกคอร์ส</button></div>
+</form>
+</div>
+</div>
+</div>
+</div>
 
-        function updateWheel() {
-            const text = document.getElementById('itemsInput').value;
-            items = text.split('\n').filter(i => i.trim() !== "");
-            document.getElementById('status').innerText = `เหลือทั้งหมด: ${items.length} รายการ`;
-            drawWheel();
-        }
+<div class="modal fade" id="lessonModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content border-0 shadow-lg rounded-4">
+<div class="modal-header bg-gradient-blue-pink text-white rounded-top-4">
+<h5 class="modal-title fw-bold"><i class="bi bi-file-text me-2"></i>จัดการบทเรียน</h5>
+<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-4">
+<form id="formLesson" novalidate>
+<input type="hidden" id="lessonCourseId">
+<input type="hidden" id="lessonId">
+<div class="row g-3">
+<div class="col-md-6"><label class="form-label fw-semibold">ชื่อบทเรียน</label><input type="text" class="form-control" id="lessonTitle" required placeholder="เช่น บทที่ 1: ตัวแปรและประเภทข้อมูล"></div>
+<div class="col-md-3"><label class="form-label fw-semibold">ประเภท</label><select class="form-select" id="lessonType"><option value="Content">ใบความรู้ (Content)</option><option value="Video">วิดีโอ (Video)</option><option value="Worksheet">ใบงาน (Worksheet)</option></select></div>
+<div class="col-md-3"><label class="form-label fw-semibold">ลำดับที่ (Order)</label><input type="number" class="form-control" id="lessonOrder" value="1" required></div>
+<div class="col-12"><label class="form-label fw-semibold">เนื้อหา / ลิงก์</label><textarea class="form-control" id="lessonContent" rows="5" placeholder="- สำหรับ 'ใบความรู้': ใส่เนื้อหา HTML/Text&#10;- สำหรับ 'วิดีโอ': ใส่ Embed Code จาก Youtube/Vimeo&#10;- สำหรับ 'ใบงาน': ใส่ลิงก์สำหรับดาวน์โหลดไฟล์"></textarea></div>
+<div class="col-12"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="lessonIsMandatory" checked><label class="form-check-label" for="lessonIsMandatory">บังคับเรียน/ดู/ทำ เพื่อให้ผ่านบทเรียนนี้</label></div></div>
+</div>
+<div class="d-flex justify-content-end gap-2 mt-4"><button type="button" class="btn btn-light" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-primary-custom">บันทึกบทเรียน</button></div>
+</form>
+</div>
+</div>
+</div>
+</div>
 
-        function drawWheel() {
-            const n = items.length;
-            const arc = (2 * Math.PI) / n;
-            canvas.width = 400;
-            canvas.height = 400;
-            
-            ctx.clearRect(0, 0, 400, 400);
-            
-            items.forEach((item, i) => {
-                const angle = i * arc;
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.beginPath();
-                ctx.moveTo(200, 200);
-                ctx.arc(200, 200, 190, angle, angle + arc);
-                ctx.fill();
-                ctx.stroke();
+<div class="modal fade" id="quizModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content border-0 shadow-lg rounded-4">
+<div class="modal-header bg-gradient-blue-pink text-white rounded-top-4">
+<h5 class="modal-title fw-bold"><i class="bi bi-question-circle me-2"></i>จัดการข้อสอบ</h5>
+<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-4">
+<form id="formQuiz" novalidate>
+<input type="hidden" id="quizCourseId">
+<input type="hidden" id="quizId">
+<div class="row g-3">
+<div class="col-md-4"><label class="form-label fw-semibold">รูปแบบข้อสอบ</label><select class="form-select" id="quizType" onchange="renderQuizOptionEditor()"><option value="multiple">ปรนัย (เลือกตอบ)</option><option value="truefalse">ถูก / ผิด</option><option value="fillblank">เติมคำตอบ</option></select></div>
+<div class="col-md-4" id="quizOptionCountWrap"><label class="form-label fw-semibold">จำนวนตัวเลือก</label><select class="form-select" id="quizOptionCount" onchange="renderQuizOptionEditor()"><option value="2">2 ตัวเลือก</option><option value="3">3 ตัวเลือก</option><option value="4" selected>4 ตัวเลือก</option><option value="5">5 ตัวเลือก</option><option value="6">6 ตัวเลือก</option><option value="7">7 ตัวเลือก</option><option value="8">8 ตัวเลือก</option></select></div>
+<div class="col-md-4"><label class="form-label fw-semibold">คะแนนข้อนี้</label><input type="number" min="1" class="form-control" id="quizScore" value="10" required></div>
+<div class="col-12"><label class="form-label fw-semibold">คำถาม / โจทย์ข้อสอบ</label><textarea class="form-control" id="quizQuestion" rows="2" required placeholder="เช่น ยาพาราเซตามอลใช้เพื่ออะไร?"></textarea></div>
+<div class="col-12"><label class="form-label fw-semibold">URL รูปภาพประกอบคำถาม (ถ้ามี)</label><input type="url" class="form-control" id="quizQuestionImage" placeholder="https://..."><div class="form-text">ใส่ลิงก์รูปภาพที่เปิดดูได้สาธารณะ</div></div>
+<div class="col-12"><div id="quizOptionsEditor" class="row g-3"></div></div>
+<div class="col-md-6"><label class="form-label fw-semibold">คำตอบที่ถูกต้อง</label><select class="form-select" id="quizCorrectAnswer" required></select></div>
+</div>
+<div class="d-flex justify-content-end gap-2 mt-4"><button type="button" class="btn btn-light" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-primary-custom">บันทึกข้อสอบ</button></div>
+</form>
+</div>
+</div>
+</div>
+</div>
 
-                // วาดข้อความ
-                ctx.save();
-                ctx.translate(200, 200);
-                ctx.rotate(angle + arc / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "white";
-                ctx.font = "bold 16px Kanit";
-                ctx.fillText(item.substring(0, 15), 170, 10);
-                ctx.restore();
-            });
-        }
+<div class="modal fade" id="certificateSettingsModal" tabindex="-1">
+<div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-lg-down">
+<div class="modal-content border-0 shadow-lg rounded-4">
+<div class="modal-header bg-gradient-blue-pink text-white rounded-top-4">
+<h5 class="modal-title fw-bold"><i class="bi bi-award-fill me-2"></i>จัดการแม่แบบเกียรติบัตร</h5>
+<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-4">
+<input type="hidden" id="certSettingsCourseId">
+<h6 class="fw-bold text-primary mb-3" id="certSettingsCourseName"></h6>
+<div class="row g-4">
+<div class="col-lg-6">
+<div class="card card-custom p-3 mb-3">
+<h6 class="fw-bold text-dark mb-3"><i class="bi bi-image me-2"></i>พื้นหลังเกียรติบัตร</h6>
+<div class="mb-3"><label class="form-label">URL รูปภาพพื้นหลัง</label><input type="url" class="form-control" id="certBgUrl" placeholder="https://example.com/background.png"></div>
+<div class="mb-3"><label class="form-label">หรือ อัปโหลดรูปภาพ</label><input class="form-control" type="file" id="certBgFile" accept="image/*"></div>
+</div>
+<div class="card card-custom p-3 mb-3">
+<h6 class="fw-bold text-dark mb-3"><i class="bi bi-file-earmark-spreadsheet me-2"></i>นำเข้าผู้รับเกียรติบัตร (CSV)</h6>
+<p class="text-muted fs-7">ใช้สำหรับนำเข้ารายชื่อผู้รับเกียรติบัตรจำนวนมาก</p>
+<div class="d-flex gap-2 mb-3"><button class="btn btn-outline-primary btn-sm" onclick="downloadCertTemplate()"><i class="bi bi-download me-1"></i>ดาวน์โหลด Template.csv</button></div>
+<div class="mb-3"><label class="form-label">อัปโหลดไฟล์ CSV</label><input class="form-control" type="file" id="certRecipientsFile" accept=".csv"></div>
+<button class="btn btn-primary-custom btn-sm" onclick="handleCertRecipientsImport()"><i class="bi bi-upload me-1"></i>นำเข้าข้อมูลผู้รับ</button>
+</div>
+<div class="card card-custom p-3"><h6 class="fw-bold text-dark mb-3"><i class="bi bi-fonts me-2"></i>ปรับแต่งข้อความ</h6><div id="certTextSettings"></div></div>
+</div>
+<div class="col-lg-6">
+<div class="card card-custom p-3 cert-preview-container">
+<h6 class="fw-bold text-dark mb-3"><i class="bi bi-eye me-2"></i>ตัวอย่างเกียรติบัตร</h6>
+<div id="certCanvasContainerAdmin" class="bg-white p-2 p-md-4 position-relative overflow-hidden" style="border:8px double #1E3A8A;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,.15);max-width:100%;margin:0 auto;box-sizing:border-box;aspect-ratio:16/10;background-size:cover;background-position:center;">
+<div class="cert-inner-box" style="border:3px double #1E3A8A;padding:30px;height:100%;position:relative;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-footer d-flex justify-content-end gap-2">
+<button type="button" class="btn btn-light" data-bs-dismiss="modal">ยกเลิก</button>
+<button type="button" class="btn btn-primary-custom" onclick="saveCertificateSettings()"><i class="bi bi-save me-1"></i>บันทึกการตั้งค่า</button>
+</div>
+</div>
+</div>
+</div>
 
-        function spinWheel() {
-            if (isSpinning || items.length === 0) return;
-            
-            isSpinning = true;
-            const spinAngle = Math.floor(Math.random() * 360) + 3600; // หมุน 10 รอบ+
-            currentRotation += spinAngle;
-            
-            canvas.style.transform = `rotate(${currentRotation}deg)`;
+<div class="modal fade" id="quizImportModal" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content border-0 shadow-lg rounded-4">
+<div class="modal-header bg-gradient-blue-pink text-white">
+<h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-arrow-up-fill me-2"></i>นำเข้าข้อสอบจากไฟล์</h5>
+<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body p-4">
+<p class="text-muted">ดาวน์โหลด Template แล้วกรอกข้อมูลใน Excel/Google Sheets จากนั้น Export/Save เป็นไฟล์ CSV แล้วอัปโหลดกลับมา</p>
+<div class="d-flex gap-2 mb-3"><button class="btn btn-outline-primary btn-sm" onclick="downloadQuizTemplate()"><i class="bi bi-download me-1"></i>ดาวน์โหลด Template.csv</button></div>
+<div class="mb-3"><label class="form-label">ไฟล์ข้อสอบ (.csv)</label><input class="form-control" type="file" id="quizFile" accept=".csv"></div>
+<div class="p-3 bg-light rounded border">
+<p class="fw-semibold mb-1">คอลัมน์ที่ต้องมีใน CSV (เรียงลำดับตามนี้):</p>
+<p class="fs-8 mb-0"><code>question, optionA, optionB, optionC, optionD, correctAnswer, score</code></p>
+<p class="fs-8 mt-2 mb-0 text-muted">correctAnswer ใส่เป็นตัวอักษร A, B, C หรือ D เท่านั้น | ถ้าคำถาม/ตัวเลือกมีเครื่องหมายจุลภาค (,) ให้ครอบด้วยเครื่องหมายคำพูด "..." (Excel/Sheets จะทำให้อัตโนมัติเมื่อ Save เป็น CSV)</p>
+</div>
+<div class="d-flex justify-content-end gap-2 mt-4"><button type="button" class="btn btn-light" data-bs-dismiss="modal">ยกเลิก</button><button type="button" class="btn btn-primary-custom" onclick="handleQuizImport()">นำเข้าข้อมูล</button></div>
+</div>
+</div>
+</div>
+</div>
 
-            setTimeout(() => {
-                isSpinning = false;
-                const actualRotation = currentRotation % 360;
-                const arcSize = 360 / items.length;
-                // คำนวณหา index (ต้องลบจาก 360 เพราะวงล้อหมุนตามเข็ม)
-                selectedIdx = Math.floor((360 - (actualRotation % 360)) / arcSize) % items.length;
-                
-                showWinner(items[selectedIdx]);
-            }, 4000);
-        }
+<div class="modal fade" id="certModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header bg-gradient-blue-pink text-white">
+<h5 class="modal-title fw-bold"><i class="bi bi-award me-2"></i>ดาวน์โหลดเกียรติบัตร</h5>
+<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body text-center p-3 p-md-4">
+<div id="certCanvasContainerStudent" class="bg-white p-2 p-md-4 position-relative" style="border:8px double #1E3A8A;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,.15);max-width:100%;margin:0 auto;box-sizing:border-box;aspect-ratio:16/10;background-size:cover;background-position:center;">
+<div class="cert-inner-box" style="border:3px double #1E3A8A;padding:30px;height:100%;position:relative;"></div>
+</div>
+<div class="mt-4 d-flex justify-content-center gap-3">
+<button class="btn btn-primary-custom" onclick="exportCertImage()"><i class="bi bi-file-image me-1"></i>บันทึกเป็น รูปภาพ (PNG)</button>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-        function showWinner(name) {
-            document.getElementById('winnerName').innerText = name;
-            document.getElementById('winnerPopup').classList.add('active');
-        }
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-        function confirmRemove(shouldRemove) {
-            if (shouldRemove) {
-                items.splice(selectedIdx, 1);
-                document.getElementById('itemsInput').value = items.join('\n');
-                updateWheel();
+<script>
+const FONT_FAMILIES = ["Noto Sans Thai","Arial","Times New Roman","Courier New","Verdana","Georgia","Impact"];
+const guestUser = { userId:"GUEST", fullName:"ผู้เยี่ยมชม", role:"Guest", email:"" };
+let currentUser = guestUser;
+let currentCourseView = null;
+let appConfig = {};
+let usersCache = [];
+let currentCertSettings = {};
+let studentState = { completedLessonIds: new Set() };
+
+function getThaiDateTimeStr(dateObj = new Date()){
+    const yearBE = dateObj.getFullYear() + 543;
+    const day = String(dateObj.getDate()).padStart(2,'0');
+    const month = String(dateObj.getMonth()+1).padStart(2,'0');
+    const hours = String(dateObj.getHours()).padStart(2,'0');
+    const mins = String(dateObj.getMinutes()).padStart(2,'0');
+    return `${day}/${month}/${yearBE} ${hours}:${mins}`;
+}
+
+function gsRun(successFn, failureFn){
+    let calledName = 'unknown';
+    const runner = google.script.run
+        .withSuccessHandler(res => {
+            if (res === null || res === undefined) {
+                console.error('❌❌❌ ฟังก์ชันที่คืนค่า null/undefined คือ: ' + calledName + ' ❌❌❌');
+                Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', text:'เซิร์ฟเวอร์ไม่ตอบสนองข้อมูล (' + calledName + ') กรุณาลองใหม่หรือ Deploy เวอร์ชันล่าสุด' });
+                return;
             }
-            document.getElementById('winnerPopup').classList.remove('active');
-        }
+            try {
+                successFn(res);
+            } catch (e) {
+                console.error('Error in success handler for ' + calledName + ':', e);
+                Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาดในหน้าเว็บ', text:e.message });
+            }
+        })
+        .withFailureHandler(failureFn || (err => {
+            console.error('❌ ฟังก์ชันที่ throw error คือ: ' + calledName, err);
+            Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาดของระบบ', text: (err && err.message ? err.message : String(err)) + ' (' + calledName + ')' });
+        }));
 
-        // เริ่มต้น
-        updateWheel();
-    </script>
+    return new Proxy(runner, {
+        get(target, prop) {
+            const orig = target[prop];
+            if (typeof orig === 'function') {
+                return (...args) => {
+                    calledName = prop;
+                    console.log('[gsRun] Calling:', prop, 'args:', args);
+                    return orig.apply(target, args);
+                };
+            }
+            return orig;
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const savedUserId = sessionStorage.getItem('elearn_userId');
+    if (savedUserId) {
+        gsRun(res => {
+            if (res && res.success) { currentUser = res.user; }
+            else { sessionStorage.removeItem('elearn_userId'); currentUser = guestUser; }
+            showApp();
+        }, () => {
+            sessionStorage.removeItem('elearn_userId');
+            currentUser = guestUser;
+            showApp();
+        }).apiCheckSession(savedUserId);
+    } else {
+        currentUser = guestUser;
+        showApp();
+    }
+});
+
+function showLogin(){
+    document.getElementById('mainApp').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('formLogin').reset();
+    gsRun(config => {
+        appConfig = config || {};
+        if (appConfig.title1) document.getElementById('loginTitle').innerText = appConfig.title1;
+    }).apiGetConfig();
+}
+
+function showApp(){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    bootApp();
+}
+
+document.getElementById('formLogin').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    doLogin(email, password);
+});
+
+function quickLogin(email, password){
+    document.getElementById('loginEmail').value = email;
+    document.getElementById('loginPassword').value = password;
+    doLogin(email, password);
+}
+
+function doLogin(email, password){
+    Swal.fire({ title:'กำลังเข้าสู่ระบบ...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        Swal.close();
+        if (res.success) {
+            currentUser = res.user;
+            sessionStorage.setItem('elearn_userId', currentUser.userId);
+            showApp();
+        } else {
+            Swal.fire('เข้าสู่ระบบไม่สำเร็จ', res.message, 'error');
+        }
+    }, err => {
+        Swal.fire('เกิดข้อผิดพลาด', err.message || String(err), 'error');
+    }).apiLogin(email, password);
+}
+
+function continueAsGuest(){
+    currentUser = guestUser;
+    sessionStorage.removeItem('elearn_userId');
+    showApp();
+}
+
+function bootApp(){
+    gsRun(config => { appConfig = config || {}; updateHeaderInfo(); }).apiGetConfig();
+    updateHeaderInfo();
+    renderSidebar();
+    renderNotifications();
+    navigateTo('dashboard');
+    setInterval(() => {
+        const el = document.getElementById('lblCurrentTime');
+        if (el) el.innerText = 'เวลาในระบบ: ' + getThaiDateTimeStr();
+    }, 1000);
+}
+
+function updateHeaderInfo(){
+    document.getElementById('navTitle1').innerText = appConfig.title1 || 'ระบบ E-Learning';
+    document.getElementById('navTitle2').innerText = appConfig.title2 || 'เรียนรู้ด้วยตนเอง 24 ชม.';
+    document.getElementById('announcementText').innerText = appConfig.announcement || '';
+
+    if (currentUser.role === 'Guest') {
+        document.getElementById('lblUserName').innerText = 'ผู้เยี่ยมชม (Guest)';
+        document.getElementById('userRoleBadge').className = 'badge px-3 py-2 rounded-pill shadow-sm bg-secondary text-white';
+        document.getElementById('btnLogoutItem').style.display = 'none';
+        document.getElementById('btnLoginItem').style.display = 'list-item';
+        document.getElementById('notificationBell').style.display = 'none';
+    } else {
+        document.getElementById('lblUserName').innerText = `${currentUser.fullName} (${currentUser.role})`;
+        const badge = document.getElementById('userRoleBadge');
+        badge.className = 'badge px-3 py-2 rounded-pill shadow-sm ' +
+            (currentUser.role === 'Admin' ? 'bg-danger text-white' :
+            currentUser.role === 'Teacher' ? 'bg-primary text-white' : 'bg-success text-white');
+        document.getElementById('btnLogoutItem').style.display = 'list-item';
+        document.getElementById('btnLoginItem').style.display = 'none';
+        document.getElementById('notificationBell').style.display = 'block';
+    }
+}
+
+function renderSidebar(){
+    const menu = document.getElementById('sidebarMenu');
+    let html = `<a href="#" class="nav-link-custom active" onclick="navigateTo('dashboard', this)"><i class="bi bi-speedometer2 fs-5"></i> แดชบอร์ด (Dashboard)</a>`;
+
+    if (currentUser.role === 'Guest') {
+        html += `<a href="#" class="nav-link-custom" onclick="navigateTo('studentCatalog', this)"><i class="bi bi-grid-fill fs-5"></i> หลักสูตรทั้งหมด</a>`;
+        menu.innerHTML = html;
+        return;
+    }
+    if (currentUser.role === 'Admin') {
+        html += `
+            <a href="#" class="nav-link-custom" onclick="navigateTo('adminUsers', this)"><i class="bi bi-people-fill fs-5"></i> จัดการผู้ใช้ (Users)</a>
+            <a href="#" class="nav-link-custom" onclick="navigateTo('adminConfig', this)"><i class="bi bi-gear-wide-connected fs-5"></i> ตั้งค่าระบบ (Config)</a>
+            <a href="#" class="nav-link-custom" onclick="navigateTo('adminSheets', this)"><i class="bi bi-file-earmark-spreadsheet-fill fs-5 text-success"></i> ฐานข้อมูล Google Sheets</a>
+        `;
+    }
+    if (currentUser.role === 'Teacher' || currentUser.role === 'Admin') {
+        html += `<a href="#" class="nav-link-custom" onclick="navigateTo('teacherCourses', this)"><i class="bi bi-journal-bookmark-fill fs-5"></i> จัดการคอร์สเรียน</a>`;
+    }
+    if (currentUser.role === 'Student' || currentUser.role === 'Admin') {
+        html += `
+            <a href="#" class="nav-link-custom" onclick="navigateTo('studentCatalog', this)"><i class="bi bi-grid-fill fs-5"></i> หลักสูตรทั้งหมด</a>
+            <a href="#" class="nav-link-custom" onclick="navigateTo('studentMyCourses', this)"><i class="bi bi-award-fill fs-5 text-warning"></i> ประวัติ & เกียรติบัตร</a>
+        `;
+    }
+    menu.innerHTML = html;
+}
+
+function renderNotifications(){
+    if (currentUser.role === 'Guest') { document.getElementById('notificationBell').style.display = 'none'; return; }
+    document.getElementById('notificationBell').style.display = 'block';
+    gsRun(userNotifications => {
+        const unreadCount = userNotifications.filter(n => !n.isRead).length;
+        const countBadge = document.getElementById('notificationCount');
+        countBadge.innerText = unreadCount;
+        countBadge.style.display = unreadCount > 0 ? 'block' : 'none';
+        const listContainer = document.getElementById('notificationList');
+        if (userNotifications.length === 0) {
+            listContainer.innerHTML = `<li><a class="dropdown-item text-muted text-center py-3 fs-8" href="#">ไม่มีการแจ้งเตือน</a></li>`;
+            return;
+        }
+        listContainer.innerHTML = userNotifications.map(n => `
+            <li><a class="dropdown-item notification-item p-3 ${n.isRead ? '' : 'unread'}" href="#" onclick="handleNotificationClick('${n.notificationId}', '${n.link}'); return false;">
+                <p class="mb-1 fs-7">${n.message}</p>
+                <small class="text-muted fs-8"><i class="bi bi-clock me-1"></i>${n.createdAt}</small>
+            </a></li>
+        `).join('');
+    }).apiGetNotifications(currentUser.userId);
+}
+
+function handleNotificationClick(notificationId, link){
+    gsRun(() => renderNotifications()).apiMarkNotificationAsRead(notificationId);
+    const targetElement = document.querySelector(`.nav-link-custom[onclick*="'${link}'"]`);
+    navigateTo(link, targetElement);
+}
+
+function navigateTo(viewName, element = null){
+    if (element) {
+        document.querySelectorAll('.nav-link-custom').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+    }
+    const container = document.getElementById('viewContainer');
+    container.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">กำลังโหลดข้อมูล...</p></div>`;
+    switch(viewName){
+        case 'dashboard': renderDashboard(); break;
+        case 'adminUsers': renderAdminUsers(); break;
+        case 'adminConfig': renderAdminConfig(); break;
+        case 'adminSheets': renderAdminSheets(); break;
+        case 'teacherCourses': renderTeacherCourses(); break;
+        case 'studentCatalog': renderStudentCatalog(); break;
+        case 'studentMyCourses': renderStudentMyCourses(); break;
+        default: renderDashboard();
+    }
+}
+
+function renderDashboard(){
+    gsRun(stats => {
+        const html = `
+            <div class="row g-4 mb-4">
+                <div class="col-md-3"><div class="card card-custom p-3 border-start border-4 border-primary"><div class="d-flex justify-content-between align-items-center">
+                    <div><small class="text-muted fw-semibold">สมาชิกทั้งหมด</small><h3 class="fw-bold text-primary mb-0">${stats.totalUsers} คน</h3></div>
+                    <div class="p-3 bg-primary bg-opacity-10 rounded-circle text-primary"><i class="bi bi-people-fill fs-3"></i></div>
+                </div></div></div>
+                <div class="col-md-3"><div class="card card-custom p-3 border-start border-4 border-success"><div class="d-flex justify-content-between align-items-center">
+                    <div><small class="text-muted fw-semibold">คอร์สเรียนเปิดสอน</small><h3 class="fw-bold text-success mb-0">${stats.totalCourses} คอร์ส</h3></div>
+                    <div class="p-3 bg-success bg-opacity-10 rounded-circle text-success"><i class="bi bi-journal-text fs-3"></i></div>
+                </div></div></div>
+                <div class="col-md-3"><div class="card card-custom p-3 border-start border-4 border-warning"><div class="d-flex justify-content-between align-items-center">
+                    <div><small class="text-muted fw-semibold">ผู้ผ่านการเรียนรู้</small><h3 class="fw-bold text-warning mb-0">${stats.passedCount} คน</h3></div>
+                    <div class="p-3 bg-warning bg-opacity-10 rounded-circle text-warning"><i class="bi bi-patch-check-fill fs-3"></i></div>
+                </div></div></div>
+                <div class="col-md-3"><div class="card card-custom p-3 border-start border-4 border-danger"><div class="d-flex justify-content-between align-items-center">
+                    <div><small class="text-muted fw-semibold">เกียรติบัตรที่ออกแล้ว</small><h3 class="fw-bold text-danger mb-0">${stats.totalCertificates} ใบ</h3></div>
+                    <div class="p-3 bg-danger bg-opacity-10 rounded-circle text-danger"><i class="bi bi-award fs-3"></i></div>
+                </div></div></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-8"><div class="card card-custom p-4 h-100">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-bar-chart-fill me-2"></i>ภาพรวมผู้ใช้งานในระบบ</h5>
+                    <div class="row g-3">
+                        <div class="col-sm-4"><div class="p-3 rounded-3 bg-danger bg-opacity-10 text-danger h-100"><div class="fs-3 fw-bold">${stats.adminCount}</div><small class="fw-semibold">ผู้ดูแลระบบ (Admin)</small></div></div>
+                        <div class="col-sm-4"><div class="p-3 rounded-3 bg-primary bg-opacity-10 text-primary h-100"><div class="fs-3 fw-bold">${stats.teacherCount}</div><small class="fw-semibold">ครู/ผู้สอน (Teacher)</small></div></div>
+                        <div class="col-sm-4"><div class="p-3 rounded-3 bg-success bg-opacity-10 text-success h-100"><div class="fs-3 fw-bold">${stats.studentCount}</div><small class="fw-semibold">นักเรียน (Student)</small></div></div>
+                    </div>
+                </div></div>
+                <div class="col-lg-4"><div class="card card-custom p-4 h-100">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-star-fill me-2"></i>คอร์สเรียนยอดนิยม</h5>
+                    <div class="list-group list-group-flush">
+                        ${stats.topCourses.map(c => `
+                            <div class="list-group-item px-0 border-0 d-flex align-items-center gap-3">
+                                <img src="${c.coverImage}" class="rounded" width="50" height="50" style="object-fit:cover;">
+                                <div class="flex-grow-1 overflow-hidden"><h6 class="fw-semibold mb-0 text-truncate">${c.courseName}</h6><small class="text-muted fs-8">${c.teacherName} (${c.enrollmentCount} ลงทะเบียน)</small></div>
+                                <span class="badge ${c.status === 'Open' ? 'bg-success':'bg-secondary'}">${c.status}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div></div>
+            </div>`;
+        document.getElementById('viewContainer').innerHTML = html;
+    }).apiGetDashboardStats(currentUser.userId, currentUser.role);
+}
+
+function renderAdminUsers(){
+    gsRun(users => {
+        usersCache = users;
+        const html = `
+            <div class="card card-custom p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-primary mb-0"><i class="bi bi-person-gear me-2"></i>จัดการสมาชิกผู้ใช้งาน</h5>
+                    <button class="btn btn-primary-custom" onclick="openUserModal()"><i class="bi bi-plus-lg me-1"></i>เพิ่มสมาชิกใหม่</button>
+                </div>
+                <div class="table-responsive"><table class="table table-hover align-middle">
+                    <thead class="table-light"><tr><th>User ID</th><th>ชื่อ-นามสกุล</th><th>อีเมล</th><th>สิทธิ์</th><th>สถานะ</th><th>เข้าสู่ระบบล่าสุด</th><th class="text-center">จัดการ</th></tr></thead>
+                    <tbody>${users.map(u => `
+                        <tr>
+                            <td><code>${u.userId}</code></td>
+                            <td class="fw-semibold">${u.fullName}</td>
+                            <td>${u.email}</td>
+                            <td><span class="badge ${u.role==='Admin'?'bg-danger':u.role==='Teacher'?'bg-primary':'bg-success'}">${u.role}</span></td>
+                            <td><span class="badge ${u.status==='Active'?'bg-success':'bg-secondary'}">${u.status}</span></td>
+                            <td><small class="text-muted">${u.lastLogin}</small></td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="openUserModal('${u.userId}')"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser('${u.userId}')"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>`).join('')}
+                    </tbody>
+                </table></div>
+            </div>`;
+        document.getElementById('viewContainer').innerHTML = html;
+    }).apiGetUsers();
+}
+
+function openUserModal(userId = null){
+    const modal = new bootstrap.Modal(document.getElementById('userModal'));
+    if (userId) {
+        const u = usersCache.find(x => x.userId === userId);
+        document.getElementById('userId').value = u.userId;
+        document.getElementById('userFullName').value = u.fullName;
+        document.getElementById('userEmail').value = u.email;
+        document.getElementById('userRole').value = u.role;
+        document.getElementById('userStatus').value = u.status;
+    } else {
+        document.getElementById('formUser').reset();
+        document.getElementById('userId').value = '';
+    }
+    modal.show();
+}
+
+document.getElementById('formUser').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const userData = {
+        userId: document.getElementById('userId').value,
+        fullName: document.getElementById('userFullName').value,
+        email: document.getElementById('userEmail').value,
+        password: document.getElementById('userPassword').value,
+        role: document.getElementById('userRole').value,
+        status: document.getElementById('userStatus').value
+    };
+    Swal.fire({ title:'กำลังบันทึก...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        if (res.success) {
+            bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
+            Swal.fire({ icon:'success', title:res.message, timer:1500, showConfirmButton:false });
+            renderAdminUsers();
+        } else { Swal.fire('ผิดพลาด', res.message, 'error'); }
+    }).apiSaveUser(userData, currentUser.userId);
+});
+
+function deleteUser(userId){
+    Swal.fire({
+        title:'ยืนยันการลบผู้ใช้?', text:"การกระทำนี้ไม่สามารถย้อนกลับได้", icon:'warning',
+        showCancelButton:true, confirmButtonColor:'#EC4899', confirmButtonText:'ใช่, ลบเลย!', cancelButtonText:'ยกเลิก'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            gsRun(res => {
+                if (res.success) { Swal.fire('ลบสำเร็จ!', res.message, 'success'); renderAdminUsers(); }
+                else { Swal.fire('ผิดพลาด', res.message, 'error'); }
+            }).apiDeleteUser(userId, currentUser.userId);
+        }
+    });
+}
+
+function renderAdminConfig(){
+    gsRun(config => {
+        appConfig = config || {};
+        const html = `
+            <div class="card card-custom p-4">
+                <h5 class="fw-bold text-primary mb-3"><i class="bi bi-sliders me-2"></i>การตั้งค่าระบบ (System Configuration)</h5>
+                <form id="formConfig">
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label fw-semibold">ชื่อระบบหลัก (Title 1)</label><input type="text" class="form-control" id="cfgTitle1" value="${appConfig.title1 || ''}"></div>
+                        <div class="col-md-6"><label class="form-label fw-semibold">สโลแกนระบบ (Title 2)</label><input type="text" class="form-control" id="cfgTitle2" value="${appConfig.title2 || ''}"></div>
+                        <div class="col-12"><label class="form-label fw-semibold">ข้อความประชาสัมพันธ์ (Announcement)</label><textarea class="form-control" id="cfgAnnouncement" rows="2">${appConfig.announcement || ''}</textarea></div>
+                        <div class="col-md-6"><label class="form-label fw-semibold">รูปแบบ Prefix เกียรติบัตร</label><input type="text" class="form-control" id="cfgCertPrefix" value="${appConfig.certificatePrefix || 'CERT'}"></div>
+                        <div class="col-md-6"><label class="form-label fw-semibold">เลขที่รันนิ่งเกียรติบัตรถัดไป</label><input type="number" class="form-control" id="cfgCertRunning" value="${appConfig.certificateRunningNumber || 1001}"></div>
+                    </div>
+                    <div class="mt-4"><button type="button" class="btn btn-primary-custom" onclick="saveConfig()"><i class="bi bi-save me-1"></i>บันทึกการตั้งค่า</button></div>
+                </form>
+            </div>`;
+        document.getElementById('viewContainer').innerHTML = html;
+    }).apiGetConfig();
+}
+
+function saveConfig(){
+    const configObj = {
+        title1: document.getElementById('cfgTitle1').value,
+        title2: document.getElementById('cfgTitle2').value,
+        announcement: document.getElementById('cfgAnnouncement').value,
+        certificatePrefix: document.getElementById('cfgCertPrefix').value,
+        certificateRunningNumber: document.getElementById('cfgCertRunning').value
+    };
+    Swal.fire({ title:'กำลังบันทึก...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        appConfig = { ...appConfig, ...configObj };
+        updateHeaderInfo();
+        Swal.fire({ icon:'success', title:res.message, timer:1500, showConfirmButton:false });
+    }).apiSaveConfig(configObj, currentUser.userId);
+}
+
+function renderAdminSheets(){
+    const html = `
+        <div class="card card-custom p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-success mb-0"><i class="bi bi-file-earmark-code-fill me-2"></i>สถานะฐานข้อมูล Google Sheets</h5>
+                <button class="btn btn-success" onclick="executeSetupAllSheet()"><i class="bi bi-play-circle-fill me-1"></i>รัน SetupAllSheet()</button>
+            </div>
+            <p class="text-muted">Code.gs ถูกติดตั้งอยู่ในโปรเจกต์ Apps Script เดียวกันกับหน้านี้แล้ว ไม่ต้องคัดลอกโค้ดไปวางซ้ำ กดปุ่มด้านบนเพื่อสร้าง/ตรวจสอบชีตที่จำเป็นทั้งหมดโดยอัตโนมัติ</p>
+            <div id="sheetsStatusContainer" class="mt-3"><div class="text-center py-4"><div class="spinner-border text-primary spinner-border-sm"></div></div></div>
+        </div>`;
+    document.getElementById('viewContainer').innerHTML = html;
+    loadSheetsStatus();
+}
+
+function loadSheetsStatus(){
+    gsRun(statusList => {
+        const container = document.getElementById('sheetsStatusContainer');
+        if (!container) return;
+        container.innerHTML = `
+            <div class="table-responsive"><table class="table table-sm table-hover align-middle">
+                <thead class="table-light"><tr><th>ชีต</th><th>สถานะ</th><th>จำนวนแถวข้อมูล</th></tr></thead>
+                <tbody>${statusList.map(s => `
+                    <tr><td class="fw-semibold">${s.name}</td>
+                    <td>${s.exists ? '<span class="badge bg-success">พร้อมใช้งาน</span>' : '<span class="badge bg-danger">ยังไม่มีชีต</span>'}</td>
+                    <td>${s.rowCount} แถว</td></tr>`).join('')}
+                </tbody>
+            </table></div>`;
+    }, err => {
+        const container = document.getElementById('sheetsStatusContainer');
+        if (container) container.innerHTML = `<div class="alert alert-danger">โหลดสถานะไม่สำเร็จ: ${err.message}</div>`;
+    }).apiGetSheetsStatus();
+}
+
+function executeSetupAllSheet(){
+    Swal.fire({ title:'กำลังสร้าง/ตรวจสอบฐานข้อมูล...', allowOutsideClick:false, didOpen: () => Swal.showLoading() });
+    gsRun(res => {
+        Swal.fire({ icon: res.success ? 'success' : 'error', title: res.success ? 'ดำเนินการสำเร็จ' : 'เกิดข้อผิดพลาด', text: res.message, confirmButtonColor:'#1E3A8A' });
+        loadSheetsStatus();
+    }, err => { Swal.fire('เกิดข้อผิดพลาด', err.message, 'error'); }).SetupAllSheet();
+}
+
+let coursesCache = [];
+
+function renderTeacherCourses(){
+    gsRun(courses => {
+        coursesCache = courses;
+        const html = `
+            <div class="card card-custom p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold text-primary mb-0"><i class="bi bi-journal-check me-2"></i>รายการคอร์สเรียนของคุณ</h5>
+                    <button class="btn btn-primary-custom" onclick="openCourseModal()"><i class="bi bi-plus-circle me-1"></i>สร้างคอร์สเรียนใหม่</button>
+                </div>
+                <div class="row g-4">${courses.map(c => `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card card-custom h-100 overflow-hidden">
+                            <img src="${c.coverImage}" class="card-img-top" style="height:180px;object-fit:cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge ${c.status==='Open'?'bg-success':'bg-secondary'}">${c.status}</span>
+                                    <small class="text-muted"><i class="bi bi-trophy me-1"></i>เกณฑ์ ${c.passScore}%</small>
+                                </div>
+                                <h6 class="fw-bold text-dark">${c.courseName}</h6>
+                                <p class="text-muted fs-7 text-truncate">${c.description}</p>
+                            </div>
+                            <div class="card-footer bg-light border-0 p-3 d-flex justify-content-between">
+                                <button class="btn btn-sm btn-outline-primary" onclick="openLessonManager('${c.courseId}')"><i class="bi bi-book me-1"></i>เนื้อหา & ข้อสอบ</button>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-warning me-1" onclick="openCertificateSettingsModal('${c.courseId}')"><i class="bi bi-award"></i></button>
+                                    <button class="btn btn-sm btn-outline-secondary me-1" onclick="openCourseModal('${c.courseId}')"><i class="bi bi-pencil"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteCourse('${c.courseId}')"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`).join('')}
+                </div>
+            </div>`;
+        document.getElementById('viewContainer').innerHTML = html;
+    }).apiGetCourses(currentUser.userId, currentUser.role);
+}
+
+function openCourseModal(courseId = null){
+    const modal = new bootstrap.Modal(document.getElementById('courseModal'));
+    if (courseId) {
+        const c = coursesCache.find(x => x.courseId === courseId);
+        document.getElementById('courseId').value = c.courseId;
+        document.getElementById('courseName').value = c.courseName;
+        document.getElementById('coursePassScore').value = c.passScore;
+        document.getElementById('courseDescription').value = c.description;
+        document.getElementById('courseCoverImage').value = c.coverImage;
+        document.getElementById('courseStatus').value = c.status;
+    } else {
+        document.getElementById('formCourse').reset();
+        document.getElementById('courseId').value = '';
+    }
+    modal.show();
+}
+
+document.getElementById('formCourse').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const courseData = {
+        courseId: document.getElementById('courseId').value,
+        courseName: document.getElementById('courseName').value,
+        passScore: parseInt(document.getElementById('coursePassScore').value),
+        description: document.getElementById('courseDescription').value,
+        coverImage: document.getElementById('courseCoverImage').value,
+        status: document.getElementById('courseStatus').value,
+        teacherId: currentUser.userId,
+        teacherName: currentUser.fullName
+    };
+    Swal.fire({ title:'กำลังบันทึก...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        if (res.success) {
+            bootstrap.Modal.getInstance(document.getElementById('courseModal')).hide();
+            Swal.fire({ icon:'success', title:res.message, timer:1500, showConfirmButton:false });
+            renderTeacherCourses();
+        } else { Swal.fire('ผิดพลาด', res.message, 'error'); }
+    }).apiSaveCourse(courseData, currentUser.userId);
+});
+
+function deleteCourse(courseId){
+    Swal.fire({ title:'ยืนยันการลบคอร์ส?', icon:'warning', showCancelButton:true, confirmButtonText:'ลบเลย', cancelButtonText:'ยกเลิก' }).then(res => {
+        if (res.isConfirmed) {
+            gsRun(r => {
+                if (r.success) { Swal.fire('ลบสำเร็จ', r.message, 'success'); renderTeacherCourses(); }
+                else { Swal.fire('ผิดพลาด', r.message, 'error'); }
+            }).apiDeleteCourse(courseId, currentUser.userId);
+        }
+    });
+}
+
+let lessonsCache = [];
+let quizzesCache = [];
+
+function openLessonManager(courseId){
+    currentCourseView = coursesCache.find(c => c.courseId === courseId);
+    document.getElementById('viewContainer').innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>`;
+    gsRun(lessons => {
+        lessonsCache = lessons;
+        gsRun(quizzes => {
+            quizzesCache = quizzes;
+            renderLessonManagerView(lessons, quizzes);
+        }).apiGetQuizzes(courseId);
+    }).apiGetLessons(courseId);
+}
+
+function renderLessonManagerView(lessons, quizzes){
+    const html = `
+        <div class="card card-custom p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div><span class="badge bg-primary">คอร์ส: ${currentCourseView.courseId}</span><h4 class="fw-bold text-dark mb-0">${currentCourseView.courseName}</h4></div>
+                <button class="btn btn-outline-secondary" onclick="renderTeacherCourses()"><i class="bi bi-arrow-left me-1"></i>กลับไปรายการคอร์ส</button>
+            </div>
+        </div>
+        <div class="card card-custom p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-primary mb-0"><i class="bi bi-list-ol me-2"></i>จัดการบทเรียน (${lessons.length} บท)</h5>
+                <button class="btn btn-pink-custom" onclick="openLessonModal()"><i class="bi bi-plus-circle me-1"></i>เพิ่มบทเรียน</button>
+            </div>
+            <div class="list-group">${lessons.map(l => `
+                <div class="list-group-item d-flex justify-content-between align-items-center p-3">
+                    <div><span class="badge bg-secondary me-2">ลำดับ ${l.order}</span><span class="fw-semibold">${l.title}</span></div>
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="openLessonModal('${l.lessonId}')"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteLesson('${l.lessonId}')"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>`).join('')}
+            </div>
+        </div>
+        <div class="card card-custom p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold text-primary mb-0"><i class="bi bi-patch-question me-2"></i>จัดการแบบทดสอบ (${quizzes.length} ข้อ)</h5>
+                <div>
+                    <button class="btn btn-outline-success me-2" onclick="openQuizImportModal()"><i class="bi bi-file-earmark-arrow-up me-1"></i>นำเข้าข้อสอบ</button>
+                    <button class="btn btn-primary-custom" onclick="openQuizModal()"><i class="bi bi-plus-circle me-1"></i>เพิ่มข้อสอบ</button>
+                </div>
+            </div>
+            <div class="table-responsive"><table class="table table-hover align-middle">
+                <thead class="table-light"><tr><th>โจทย์</th><th>ข้อถูก</th><th>คะแนน</th><th>จัดการ</th></tr></thead>
+                <tbody>${quizzes.map(q => `
+                    <tr><td>${q.question}</td><td><span class="badge bg-success">ข้อ ${q.correctAnswer}</span></td><td>${q.score} คะแนน</td>
+                    <td><button class="btn btn-sm btn-outline-primary me-1" onclick="openQuizModal('${q.quizId}')"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteQuiz('${q.quizId}')"><i class="bi bi-trash"></i></button></td></tr>`).join('')}
+                </tbody>
+            </table></div>
+        </div>`;
+    document.getElementById('viewContainer').innerHTML = html;
+}
+
+function openLessonModal(lessonId = null){
+    const modal = new bootstrap.Modal(document.getElementById('lessonModal'));
+    if (lessonId) {
+        const l = lessonsCache.find(x => x.lessonId === lessonId);
+        document.getElementById('lessonId').value = l.lessonId;
+        document.getElementById('lessonCourseId').value = l.courseId;
+        document.getElementById('lessonTitle').value = l.title;
+        document.getElementById('lessonOrder').value = l.order;
+        document.getElementById('lessonContent').value = l.content;
+        document.getElementById('lessonType').value = l.type || 'Content';
+        document.getElementById('lessonIsMandatory').checked = l.isMandatory !== false;
+    } else {
+        document.getElementById('formLesson').reset();
+        document.getElementById('lessonId').value = '';
+        document.getElementById('lessonCourseId').value = currentCourseView.courseId;
+    }
+    modal.show();
+}
+
+document.getElementById('formLesson').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const lessonData = {
+        lessonId: document.getElementById('lessonId').value,
+        courseId: document.getElementById('lessonCourseId').value,
+        title: document.getElementById('lessonTitle').value,
+        order: parseInt(document.getElementById('lessonOrder').value),
+        content: document.getElementById('lessonContent').value,
+        type: document.getElementById('lessonType').value,
+        isMandatory: document.getElementById('lessonIsMandatory').checked
+    };
+    Swal.fire({ title:'กำลังบันทึก...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        bootstrap.Modal.getInstance(document.getElementById('lessonModal')).hide();
+        Swal.fire({ icon:'success', title:res.message, timer:1500, showConfirmButton:false });
+        openLessonManager(currentCourseView.courseId);
+    }).apiSaveLesson(lessonData);
+});
+
+function deleteLesson(lessonId){
+    gsRun(res => { openLessonManager(currentCourseView.courseId); }).apiDeleteLesson(lessonId);
+}
+
+function quizLabel(index){ return String.fromCharCode(65 + index); }
+function renderQuizOptionEditor(existingOptions = null){
+    const typeEl = document.getElementById('quizType');
+    if (!typeEl) return;
+    const type = typeEl.value;
+    const countWrap = document.getElementById('quizOptionCountWrap');
+    const countEl = document.getElementById('quizOptionCount');
+    const holder = document.getElementById('quizOptionsEditor');
+    const correct = document.getElementById('quizCorrectAnswer');
+    if (countWrap) countWrap.style.display = type === 'multiple' ? '' : 'none';
+    let options = [];
+    if (type === 'truefalse') options = [{value:'true',text:'ถูก',imageUrl:''},{value:'false',text:'ผิด',imageUrl:''}];
+    else if (type === 'multiple') {
+        const n = parseInt(countEl.value || '4',10);
+        for(let i=0;i<n;i++) options.push(existingOptions && existingOptions[i] ? existingOptions[i] : {value:quizLabel(i),text:'',imageUrl:''});
+    }
+    if(type === 'fillblank') {
+        holder.innerHTML = '<div class="col-12"><label class="form-label fw-semibold">คำตอบที่ยอมรับ</label><input id="quizFillAnswer" class="form-control" required placeholder="ระบุคำตอบที่ถูกต้อง"><div class="form-text">ระบบตรวจคำตอบโดยไม่แยกตัวพิมพ์เล็ก/ใหญ่และตัดช่องว่างหัวท้าย</div></div>';
+        correct.innerHTML = '<option value="__fill__">คำตอบที่ระบุ</option>';
+        correct.value='__fill__';
+        return;
+    }
+    holder.innerHTML = options.map((o,i)=>`<div class="col-md-6"><div class="border rounded-3 p-3 h-100"><label class="form-label fw-semibold">ตัวเลือก ${quizLabel(i)}</label><input class="form-control mb-2 quiz-option-text" data-index="${i}" value="${escapeHtmlAttr(o.text||'')}" placeholder="ข้อความตัวเลือก"><input type="url" class="form-control quiz-option-image" data-index="${i}" value="${escapeHtmlAttr(o.imageUrl||'')}" placeholder="URL รูปภาพตัวเลือก (ถ้ามี)"><div class="form-text">ใส่ข้อความ รูปภาพ หรือทั้งสองอย่าง</div></div></div>`).join('');
+    correct.innerHTML = options.map((o,i)=>`<option value="${o.value}">ข้อ ${quizLabel(i)}${type==='truefalse'?' - '+o.text:''}</option>`).join('');
+}
+function escapeHtmlAttr(value){return String(value||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function openQuizModal(quizId = null){
+    const modal = new bootstrap.Modal(document.getElementById('quizModal'));
+    document.getElementById('formQuiz').reset();
+    document.getElementById('quizId').value = '';
+    document.getElementById('quizCourseId').value = currentCourseView.courseId;
+    document.getElementById('quizType').value = 'multiple';
+    document.getElementById('quizOptionCount').value = '4';
+    let options = null;
+    if (quizId) {
+        const q = quizzesCache.find(x => x.quizId === quizId);
+        if (!q) return;
+        document.getElementById('quizId').value = q.quizId;
+        document.getElementById('quizQuestion').value = q.question || '';
+        document.getElementById('quizQuestionImage').value = q.questionImage || '';
+        document.getElementById('quizScore').value = q.score || 10;
+        document.getElementById('quizType').value = q.questionType || 'multiple';
+        try { options = q.optionsJson ? JSON.parse(q.optionsJson) : null; } catch(e) { options = null; }
+        if (!options) options = ['A','B','C','D'].map((k,i)=>({value:k,text:q['option'+k]||'',imageUrl:''}));
+        if (document.getElementById('quizType').value === 'multiple') document.getElementById('quizOptionCount').value = String(options.length || 4);
+        renderQuizOptionEditor(options);
+        if (q.questionType === 'fillblank') {
+            const fill = document.getElementById('quizFillAnswer');
+            if(fill) fill.value = q.correctAnswer || '';
+        } else document.getElementById('quizCorrectAnswer').value = q.correctAnswer || 'A';
+    } else renderQuizOptionEditor();
+    modal.show();
+}
+document.getElementById('formQuiz').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const type = document.getElementById('quizType').value;
+    let options = [];
+    let correctAnswer = document.getElementById('quizCorrectAnswer').value;
+    if(type === 'fillblank') {
+        correctAnswer = (document.getElementById('quizFillAnswer')?.value || '').trim();
+        if(!correctAnswer){ Swal.fire('กรุณาระบุคำตอบที่ถูกต้อง','','warning'); return; }
+    } else {
+        const texts = [...document.querySelectorAll('.quiz-option-text')];
+        const images = [...document.querySelectorAll('.quiz-option-image')];
+        options = texts.map((el,i)=>({value: type==='truefalse' ? (i===0?'true':'false') : quizLabel(i), text: type==='truefalse' ? (i===0?'ถูก':'ผิด') : el.value.trim(), imageUrl: images[i]?.value.trim() || ''}));
+        if(type==='multiple' && options.some(o=>!o.text && !o.imageUrl)){ Swal.fire('กรุณากรอกตัวเลือกหรือใส่รูปภาพให้ครบ','','warning'); return; }
+    }
+    const quizData = {
+        quizId: document.getElementById('quizId').value,
+        courseId: document.getElementById('quizCourseId').value,
+        question: document.getElementById('quizQuestion').value.trim(),
+        questionType: type, questionImage: document.getElementById('quizQuestionImage').value.trim(),
+        options: options, optionsJson: JSON.stringify(options), correctAnswer: correctAnswer,
+        optionA: options[0]?.text || '', optionB: options[1]?.text || '', optionC: options[2]?.text || '', optionD: options[3]?.text || '',
+        score: parseFloat(document.getElementById('quizScore').value) || 10
+    };
+    Swal.fire({ title:'กำลังบันทึก...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        if(res && res.success === false){ Swal.fire('บันทึกไม่สำเร็จ',res.message||'กรุณาลองใหม่','error'); return; }
+        bootstrap.Modal.getInstance(document.getElementById('quizModal')).hide();
+        Swal.fire({ icon:'success', title:res.message, timer:1500, showConfirmButton:false });
+        openLessonManager(currentCourseView.courseId);
+    }).apiSaveQuiz(quizData);
+});
+
+function deleteQuiz(quizId){
+    gsRun(res => { openLessonManager(currentCourseView.courseId); }).apiDeleteQuiz(quizId);
+}
+
+function openQuizImportModal(){
+    const modal = new bootstrap.Modal(document.getElementById('quizImportModal'));
+    document.getElementById('quizFile').value = '';
+    modal.show();
+}
+
+function downloadQuizTemplate(){
+    const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(
+        'question,optionA,optionB,optionC,optionD,correctAnswer,score\n' +
+        '"ยาพาราเซตามอลใช้เพื่ออะไร?","บรรเทาปวดและลดไข้","รักษาการติดเชื้อแบคทีเรีย","ลดความดันโลหิต","รักษาโรคเบาหวาน",A,10\n' +
+        '"เมื่อได้รับยาปฏิชีวนะ ควรทำอย่างไร?","หยุดยาเมื่ออาการดีขึ้นเอง","ใช้ตามคำสั่งและคำแนะนำของบุคลากรทางการแพทย์","แบ่งยาให้ผู้อื่น","เพิ่มขนาดยาเอง",B,10\n'
+    );
+    const link = document.createElement("a");
+    link.setAttribute("href", csvContent);
+    link.setAttribute("download", "quiz_import_template.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function handleQuizImport(){
+    const fileInput = document.getElementById('quizFile');
+    if (fileInput.files.length === 0) { Swal.fire('ข้อผิดพลาด', 'กรุณาเลือกไฟล์ CSV ก่อน', 'error'); return; }
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function(event){
+        const csvText = event.target.result;
+        Swal.fire({ title:'กำลังนำเข้า...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+        gsRun(res => {
+            bootstrap.Modal.getInstance(document.getElementById('quizImportModal')).hide();
+            if (res.success) {
+                Swal.fire('สำเร็จ', res.message, 'success');
+            } else {
+                Swal.fire('เกิดข้อผิดพลาด', res.message, 'error');
+            }
+            openLessonManager(currentCourseView.courseId);
+        }).apiImportQuizzes(currentCourseView.courseId, csvText);
+    };
+    reader.readAsText(file, 'UTF-8');
+}
+
+function openCertificateSettingsModal(courseId){
+    const modal = new bootstrap.Modal(document.getElementById('certificateSettingsModal'));
+    const course = coursesCache.find(c => c.courseId === courseId) || { courseId, courseName: '' };
+    document.getElementById('certSettingsCourseId').value = courseId;
+    document.getElementById('certSettingsCourseName').innerText = `คอร์ส: ${course.courseName}`;
+
+    gsRun(settings => {
+        currentCertSettings = settings;
+        document.getElementById('certBgUrl').value = currentCertSettings.bgUrl || '';
+        renderCertTextSettingsForm(currentCertSettings.elements);
+        updateCertificatePreview(null, 'certCanvasContainerAdmin');
+        modal.show();
+    }).apiGetCourseCertificateSettings(courseId);
+}
+
+function renderCertTextSettingsForm(elements){
+    const container = document.getElementById('certTextSettings');
+    container.innerHTML = '';
+    for (const key in elements) {
+        const el = elements[key];
+        const isStaticText = ['title','subTitle','introText','courseIntro'].includes(key);
+        const label = { title:'ชื่อเกียรติบัตร', subTitle:'คำบรรยายเกียรติบัตร', introText:'ข้อความนำ', name:'ชื่อผู้รับ', courseIntro:'ข้อความก่อนชื่อคอร์ส', courseTitle:'ชื่อคอร์ส', date:'วันที่ออก', certNo:'เลขที่เกียรติบัตร' }[key] || key;
+        container.innerHTML += `
+            <div class="mb-3 p-2 border rounded bg-light">
+                <h6 class="fw-semibold text-secondary mb-2">${label}</h6>
+                ${isStaticText ? `<div class="mb-2"><label class="form-label fs-7">ข้อความ</label><input type="text" class="form-control form-control-sm" data-key="${key}" data-prop="text" value="${el.text || ''}" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>` : ''}
+                <div class="row g-2">
+                    <div class="col-md-4"><label class="form-label fs-7">Font</label><select class="form-select form-select-sm" data-key="${key}" data-prop="font" onchange="updateCertificatePreview(null,'certCanvasContainerAdmin')">${FONT_FAMILIES.map(f => `<option value="${f}" ${el.font === f ? 'selected' : ''}>${f}</option>`).join('')}</select></div>
+                    <div class="col-md-2"><label class="form-label fs-7">Size</label><input type="number" class="form-control form-control-sm" data-key="${key}" data-prop="size" value="${el.size}" min="10" max="100" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
+                    <div class="col-md-2"><label class="form-label fs-7">Color</label><input type="color" class="form-control form-control-sm form-control-color" data-key="${key}" data-prop="color" value="${el.color}" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
+                    <div class="col-md-1"><label class="form-label fs-7">X (%)</label><input type="number" class="form-control form-control-sm" data-key="${key}" data-prop="x" value="${el.x}" min="0" max="100" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
+                    <div class="col-md-1"><label class="form-label fs-7">Y (%)</label><input type="number" class="form-control form-control-sm" data-key="${key}" data-prop="y" value="${el.y}" min="0" max="100" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
+                    <div class="col-md-2"><label class="form-label fs-7">Align</label><select class="form-select form-select-sm" data-key="${key}" data-prop="align" onchange="updateCertificatePreview(null,'certCanvasContainerAdmin')"><option value="left" ${el.align==='left'?'selected':''}>ซ้าย</option><option value="center" ${el.align==='center'?'selected':''}>กลาง</option><option value="right" ${el.align==='right'?'selected':''}>ขวา</option></select></div>
+                </div>
+            </div>`;
+    }
+}
+
+document.getElementById('certBgUrl').addEventListener('input', () => updateCertificatePreview(null, 'certCanvasContainerAdmin'));
+document.getElementById('certBgFile').addEventListener('change', handleCertBackgroundUpload);
+
+function updateCertificatePreview(certData = null, containerId = 'certCanvasContainerAdmin'){
+    const previewContainer = document.getElementById(containerId);
+    if (!previewContainer) return;
+    const innerBox = previewContainer.querySelector('.cert-inner-box');
+
+    let settingsToRender = currentCertSettings;
+    if (certData && certData.templateData) {
+        settingsToRender = JSON.parse(certData.templateData);
+    } else if (containerId === 'certCanvasContainerAdmin') {
+        settingsToRender.bgUrl = document.getElementById('certBgUrl').value;
+        document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
+            const key = input.dataset.key, prop = input.dataset.prop;
+            if (settingsToRender.elements[key]) {
+                settingsToRender.elements[key][prop] = input.type === 'number' ? parseInt(input.value) : input.value;
+            }
+        });
+    }
+
+    previewContainer.style.backgroundImage = settingsToRender.bgUrl ? `url(${settingsToRender.bgUrl})` : 'none';
+    previewContainer.style.backgroundColor = settingsToRender.bgUrl ? 'transparent' : '#FFFDF9';
+    innerBox.innerHTML = '';
+
+    for (const key in settingsToRender.elements) {
+        const el = settingsToRender.elements[key];
+        let textContent = el.text || '';
+        if (key === 'name' && certData) textContent = certData.fullName || 'ชื่อผู้รับเกียรติบัตร';
+        if (key === 'courseTitle' && certData) textContent = certData.courseName || 'ชื่อหลักสูตร';
+        if (key === 'date' && certData) textContent = textContent.replace('{date}', certData.issuedAt || getThaiDateTimeStr());
+        if (key === 'certNo' && certData) textContent = textContent.replace('{certNo}', certData.certificateNo || 'CERT-XXXX-YYYY');
+
+        const div = document.createElement('div');
+        div.style.position = 'absolute';
+        div.style.left = `${el.x}%`;
+        div.style.top = `${el.y}%`;
+        div.style.transform = `translate(-${el.x}%, -${el.y}%)`;
+        div.style.fontFamily = el.font;
+        div.style.fontSize = `${el.size}px`;
+        div.style.color = el.color;
+        div.style.textAlign = el.align;
+        div.style.width = '100%';
+        div.style.whiteSpace = 'pre-wrap';
+        div.style.wordBreak = 'break-word';
+        div.innerHTML = textContent;
+        innerBox.appendChild(div);
+    }
+}
+
+function handleCertBackgroundUpload(event){
+    const file = event.target.files[0];
+    if (!file) return;
+    const courseId = document.getElementById('certSettingsCourseId').value;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        const dataUrl = e.target.result;
+        const base64Data = dataUrl.split(',')[1];
+        Swal.fire({ title:'กำลังอัปโหลด...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+        gsRun(res => {
+            Swal.close();
+            if (res.success) {
+                document.getElementById('certBgUrl').value = res.url;
+                updateCertificatePreview(null, 'certCanvasContainerAdmin');
+            } else {
+                Swal.fire('อัปโหลดไม่สำเร็จ', res.message, 'error');
+            }
+        }).apiUploadCertBackgroundImage(courseId, base64Data, file.type, file.name);
+    };
+    reader.readAsDataURL(file);
+}
+
+function downloadCertTemplate(){
+    const csvContent = "data:text/csv;charset=utf-8,fullName,email\nนายสมชาย ใจดี,somchai@example.com\nนางสาวมณี มีสุข,manee@example.com";
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "certificate_recipients_template.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function handleCertRecipientsImport(){
+    const fileInput = document.getElementById('certRecipientsFile');
+    if (fileInput.files.length === 0) { Swal.fire('ข้อผิดพลาด', 'กรุณาเลือกไฟล์ CSV ก่อน', 'error'); return; }
+    const courseId = document.getElementById('certSettingsCourseId').value;
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function(event){
+        Swal.fire({ title:'กำลังนำเข้า...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+        gsRun(res => {
+            Swal.fire(res.success ? 'สำเร็จ' : 'ผิดพลาด', res.message, res.success ? 'success' : 'error');
+        }).apiImportCertificateRecipients(courseId, event.target.result, currentUser.userId);
+    };
+    reader.readAsText(file);
+}
+
+function saveCertificateSettings(){
+    const courseId = document.getElementById('certSettingsCourseId').value;
+    currentCertSettings.bgUrl = document.getElementById('certBgUrl').value;
+    document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
+        const key = input.dataset.key, prop = input.dataset.prop;
+        if (currentCertSettings.elements[key]) {
+            currentCertSettings.elements[key][prop] = input.type === 'number' ? parseInt(input.value) : input.value;
+        }
+    });
+    Swal.fire({ title:'กำลังบันทึก...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        Swal.fire(res.success ? 'สำเร็จ' : 'ผิดพลาด', res.message, res.success ? 'success' : 'error');
+        if (res.success) bootstrap.Modal.getInstance(document.getElementById('certificateSettingsModal')).hide();
+    }).apiSaveCourseCertificateSettings(courseId, JSON.stringify(currentCertSettings), currentUser.userId);
+}
+
+function renderStudentCatalog(){
+    gsRun(courses => {
+        coursesCache = courses;
+        gsRun(myEnrollments => {
+            const html = `
+                <div class="card card-custom p-4 mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-search me-2"></i>สำรวจคอร์สเรียนทั้งหมด</h5>
+                    <input type="text" class="form-control" id="searchCourseInput" placeholder="ค้นหาชื่อคอร์สเรียน..." onkeyup="filterCourses()">
+                </div>
+                <div class="row g-4" id="courseGrid">${courses.filter(c => c.status === 'Open').map(c => {
+                    const isEnrolled = myEnrollments.some(e => e.courseId === c.courseId);
+                    return `
+                        <div class="col-md-6 col-lg-4 course-card-item">
+                            <div class="card card-custom h-100 overflow-hidden">
+                                <img src="${c.coverImage}" class="card-img-top" style="height:180px;object-fit:cover;">
+                                <div class="card-body">
+                                    <h6 class="fw-bold text-primary">${c.courseName}</h6>
+                                    <p class="text-muted fs-7">${c.description}</p>
+                                    <small class="text-secondary d-block"><i class="bi bi-person me-1"></i>ผู้สอน: ${c.teacherName}</small>
+                                </div>
+                                <div class="card-footer bg-white border-0 p-3">
+                                    <button class="btn ${isEnrolled ? 'btn-success':'btn-pink-custom'} w-100" onclick="startLearning('${c.courseId}')">
+                                        <i class="bi ${isEnrolled ? 'bi-play-circle-fill':'bi-book-half'} me-1"></i>${isEnrolled ? 'เรียนต่อ / ทำข้อสอบ' : 'เข้าเรียนเลย'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                }).join('')}</div>`;
+            document.getElementById('viewContainer').innerHTML = html;
+        }).apiGetMyEnrollments(currentUser.userId);
+    }).apiGetCourses(currentUser.userId, currentUser.role);
+}
+
+function filterCourses(){
+    const query = document.getElementById('searchCourseInput').value.toLowerCase();
+    document.querySelectorAll('.course-card-item').forEach(item => {
+        item.style.display = item.innerText.toLowerCase().includes(query) ? 'block' : 'none';
+    });
+}
+
+function startLearning(courseId){
+    if (currentUser.role === 'Guest') {
+        Swal.fire('กรุณาเข้าสู่ระบบ', 'ต้องเข้าสู่ระบบก่อนเริ่มเรียน', 'info');
+        return;
+    }
+    document.getElementById('viewContainer').innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">กำลังโหลดข้อมูลคอร์สเรียน...</p></div>`;
+    gsRun(res => {
+        if (!res.success) { Swal.fire('ข้อผิดพลาด', res.message, 'error'); renderStudentCatalog(); return; }
+        currentCourseView = res.data.course;
+        studentState.completedLessonIds = new Set(res.data.completedLessonIds);
+        renderStudentLearningView(res.data);
+    }).apiGetStudentCourseData(currentUser.userId, courseId);
+}
+
+function renderStudentLearningView(data){
+    const { course, lessons, quizzes, enrollment, completedLessonIds } = data;
+    const mandatoryLessons = lessons.filter(l => l.isMandatory);
+    const completedMandatoryCount = mandatoryLessons.filter(l => completedLessonIds.includes(l.lessonId)).length;
+    const allMandatoryCompleted = completedMandatoryCount === mandatoryLessons.length;
+
+    const html = `
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card card-custom p-4 mb-4" id="lessonViewerCard">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-primary mb-0">${course.courseName}</h5>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="renderStudentCatalog()"><i class="bi bi-x-lg"></i> ออก</button>
+                    </div>
+                    <hr>
+                    <div id="lessonContentArea">${lessons.length > 0 ? renderLessonContent(lessons[0]) : '<p class="text-muted">ยังไม่มีเนื้อหาในคอร์สนี้</p>'}</div>
+                </div>
+                <div class="card card-custom p-3 mb-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="fw-semibold text-primary flex-shrink-0">ความคืบหน้า:</div>
+                        <div class="progress flex-grow-1" style="height:10px;"><div id="lessonProgressBar" class="progress-bar bg-success" style="width:${enrollment.progress}%"></div></div>
+                        <div id="lessonProgressText" class="fw-bold text-nowrap">${completedMandatoryCount} / ${mandatoryLessons.length} (บทเรียนที่บังคับ)</div>
+                    </div>
+                </div>
+                <div class="card card-custom p-4 bg-gradient-blue-pink text-white text-center">
+                    <h5 class="fw-bold"><i class="bi bi-patch-question-fill me-2"></i>พร้อมทำแบบทดสอบหรือยัง?</h5>
+                    <p class="mb-3">เรียนรู้บทเรียนที่บังคับให้ครบถ้วน จากนั้นทำแบบทดสอบให้ได้คะแนนอย่างน้อย ${course.passScore}% เพื่อรับเกียรติบัตร</p>
+                    <div><button id="btnStartQuiz" class="btn btn-light fw-bold text-primary px-4 rounded-pill" onclick="startQuiz('${course.courseId}')" ${!allMandatoryCompleted ? 'disabled' : ''}><i class="bi bi-pencil-square me-1"></i>เริ่มทำแบบทดสอบ (${quizzes.length} ข้อ)</button></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card card-custom p-4" style="position:sticky;top:80px;">
+                    <h6 class="fw-bold text-primary mb-3"><i class="bi bi-journal-text me-2"></i>สารบัญบทเรียน</h6>
+                    <div class="list-group" id="studentLessonList">${lessons.map((l, index) => {
+                        const isCompleted = completedLessonIds.includes(l.lessonId);
+                        return `<button id="lesson-item-${l.lessonId}" class="list-group-item list-group-item-action border-0 mb-1 rounded p-3 d-flex justify-content-between align-items-center ${index===0?'active':''}" onclick="displayLesson('${l.lessonId}', this)">
+                            <span><i class="bi ${isCompleted ? 'bi-check-circle-fill text-success' : 'bi-play-circle'} me-2"></i>${l.title}${l.isMandatory ? '<span class="badge bg-danger-soft text-danger ms-2 fs-8">บังคับ</span>' : ''}</span>
+                        </button>`;
+                    }).join('')}</div>
+                </div>
+            </div>
+        </div>`;
+    document.getElementById('viewContainer').innerHTML = html;
+    if (lessons.length > 0) markLessonAsCompleted(lessons[0].lessonId);
+}
+
+function renderLessonContent(lesson){
+    switch(lesson.type){
+        case 'Video': return `<div class="ratio ratio-16x9">${lesson.content}</div>`;
+        case 'Worksheet': return `<div class="text-center p-5 bg-light rounded"><i class="bi bi-file-earmark-arrow-down-fill fs-1 text-primary"></i><h5 class="mt-3">ใบงาน: ${lesson.title}</h5><p>คลิกเพื่อดาวน์โหลดใบงานและทำตามคำแนะนำ</p><a href="${lesson.content}" target="_blank" class="btn btn-primary-custom"><i class="bi bi-download me-1"></i>ดาวน์โหลดไฟล์</a></div>`;
+        default: return lesson.content;
+    }
+}
+
+function displayLesson(lessonId, element){
+    document.querySelectorAll('#studentLessonList .list-group-item').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+    gsRun(lessons => {
+        const lesson = lessons.find(l => l.lessonId === lessonId);
+        document.getElementById('lessonContentArea').innerHTML = renderLessonContent(lesson);
+        markLessonAsCompleted(lessonId);
+    }).apiGetLessons(currentCourseView.courseId);
+}
+
+function markLessonAsCompleted(lessonId){
+    if (studentState.completedLessonIds.has(lessonId)) return;
+    gsRun(res => {
+        studentState.completedLessonIds.add(lessonId);
+        updateProgressUI(res, lessonId);
+    }).apiMarkLessonCompleted(currentUser.userId, currentCourseView.courseId, lessonId);
+}
+
+function updateProgressUI(response, completedLessonId){
+    const lessonItem = document.getElementById(`lesson-item-${completedLessonId}`);
+    if (lessonItem) {
+        const icon = lessonItem.querySelector('i.bi');
+        icon.classList.remove('bi-play-circle');
+        icon.classList.add('bi-check-circle-fill', 'text-success');
+    }
+    gsRun(lessons => {
+        const mandatoryLessons = lessons.filter(l => l.isMandatory);
+        const completedMandatoryCount = mandatoryLessons.filter(l => studentState.completedLessonIds.has(l.lessonId)).length;
+        const bar = document.getElementById('lessonProgressBar');
+        const text = document.getElementById('lessonProgressText');
+        if (bar) bar.style.width = `${response.newProgress}%`;
+        if (text) text.innerText = `${completedMandatoryCount} / ${mandatoryLessons.length} (บทเรียนที่บังคับ)`;
+        const btn = document.getElementById('btnStartQuiz');
+        if (btn && completedMandatoryCount === mandatoryLessons.length) btn.disabled = false;
+    }).apiGetLessons(currentCourseView.courseId);
+}
+
+function startQuiz(courseId){
+    gsRun(quizzes => {
+        if (!quizzes || quizzes.length === 0) { Swal.fire('แจ้งเตือน', 'คอร์สนี้ยังไม่มีแบบทดสอบ', 'info'); return; }
+        const esc = v => String(v == null ? '' : v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        const html = `<div class="card card-custom p-4 max-w-2xl mx-auto"><h5 class="fw-bold text-primary mb-3 text-center"><i class="bi bi-card-checklist me-2"></i>แบบทดสอบวัดผล: ${esc(currentCourseView.courseName)}</h5><form id="quizForm">${quizzes.map((q,idx)=>{
+            let opts=[]; try{opts=q.optionsJson?JSON.parse(q.optionsJson):null;}catch(e){}
+            const type=q.questionType||'multiple';
+            if(!opts || !opts.length) opts=['A','B','C','D'].map(k=>({value:k,text:q['option'+k]||'',imageUrl:''}));
+            const questionImage=q.questionImage?`<img src="${esc(q.questionImage)}" alt="ภาพประกอบคำถาม" class="img-fluid rounded mb-2" style="max-height:260px" onerror="this.style.display='none'">`:'';
+            let answerUI='';
+            if(type==='fillblank') answerUI=`<input class="form-control" type="text" name="q_${esc(q.quizId)}" placeholder="พิมพ์คำตอบ" required>`;
+            else answerUI=opts.map((o,i)=>`<div class="form-check mb-2"><input class="form-check-input" type="radio" name="q_${esc(q.quizId)}" value="${esc(o.value||quizLabel(i))}" required id="opt_${esc(q.quizId)}_${i}"><label class="form-check-label" for="opt_${esc(q.quizId)}_${i}">${type==='truefalse'?'':quizLabel(i)+') '}${esc(o.text||'')}${o.imageUrl?`<div><img src="${esc(o.imageUrl)}" alt="รูปตัวเลือก" class="img-fluid rounded mt-2" style="max-height:180px" onerror="this.style.display='none'"></div>`:''}</label></div>`).join('');
+            return `<div class="mb-4 p-3 border rounded-3 bg-light"><p class="fw-semibold mb-2">ข้อที่ ${idx+1}: ${esc(q.question)}</p>${questionImage}${answerUI}</div>`;
+        }).join('')}<div class="text-center mt-4"><button type="submit" class="btn btn-primary-custom btn-lg px-5"><i class="bi bi-send-check me-1"></i>ส่งคำตอบแบบทดสอบ</button></div></form></div>`;
+        document.getElementById('viewContainer').innerHTML=html;
+        document.getElementById('quizForm').addEventListener('submit',e=>{
+            e.preventDefault(); const answersMap={};
+            quizzes.forEach(q=>{const selected=document.querySelector(`[name="q_${q.quizId}"]:checked`); const text=document.querySelector(`[name="q_${q.quizId}"]:not([type="radio"])`); if(selected)answersMap[q.quizId]=selected.value; else if(text)answersMap[q.quizId]=text.value.trim();});
+            Swal.fire({title:'กำลังส่งคำตอบ...',didOpen:()=>Swal.showLoading(),allowOutsideClick:false});
+            gsRun(res=>{if(res.passed){Swal.fire({icon:'success',title:'ยินดีด้วย! คุณผ่านการทดสอบ',text:`คุณได้คะแนน ${res.percentage}% (เกณฑ์ผ่านคือ ${res.passScore}%) ระบบออกเกียรติบัตรให้คุณแล้ว!`,confirmButtonText:'รับเกียรติบัตร',confirmButtonColor:'#1E3A8A'}).then(()=>renderStudentMyCourses());}else{Swal.fire({icon:'error',title:'สอบไม่ผ่านเกณฑ์',text:`คุณได้คะแนน ${res.percentage}% (เกณฑ์ผ่านคือ ${res.passScore}%) สามารถกลับไปทบทวนและทำใหม่ได้`,confirmButtonText:'ตกลง'}).then(()=>startLearning(courseId));}}).apiSubmitQuiz(currentUser.userId,courseId,answersMap);
+        });
+    }).apiGetQuizzes(courseId);
+}
+
+function renderStudentMyCourses(){
+    gsRun(myEnrollments => {
+        gsRun(allCourses => {
+            const html = `
+                <div class="card card-custom p-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-award-fill me-2"></i>ประวัติการเรียน & เกียรติบัตรของคุณ</h5>
+                    <div class="table-responsive"><table class="table table-hover align-middle">
+                        <thead class="table-light"><tr><th>ชื่อคอร์ส</th><th>ความคืบหน้า</th><th>คะแนนสอบ</th><th>สถานะ</th><th>วันที่ลงทะเบียน</th><th class="text-center">เกียรติบัตร</th></tr></thead>
+                        <tbody>${myEnrollments.map(e => {
+                            const c = allCourses.find(x => x.courseId === e.courseId);
+                            return `<tr>
+                                <td class="fw-semibold">${c ? c.courseName : '-'}</td>
+                                <td><div class="progress" style="height:8px;"><div class="progress-bar bg-success" style="width:${e.progress}%"></div></div></td>
+                                <td><span class="fw-bold">${e.score}%</span></td>
+                                <td><span class="badge ${e.status==='Passed'?'bg-success':e.status==='Failed'?'bg-danger':'bg-warning'}">${e.status}</span></td>
+                                <td><small class="text-muted">${e.enrolledAt}</small></td>
+                                <td class="text-center">${e.status === 'Passed' ? `<button class="btn btn-sm btn-pink-custom" onclick="downloadCert('${e.certificateNo}')"><i class="bi bi-download me-1"></i>เกียรติบัตร</button>` : `<span class="text-muted fs-8">-</span>`}</td>
+                            </tr>`;
+                        }).join('')}</tbody>
+                    </table></div>
+                </div>`;
+            document.getElementById('viewContainer').innerHTML = html;
+        }).apiGetCourses(currentUser.userId, currentUser.role);
+    }).apiGetMyEnrollments(currentUser.userId);
+}
+
+function downloadCert(certNo){
+    gsRun(cert => {
+        if (!cert) { Swal.fire('ข้อผิดพลาด', 'ไม่พบข้อมูลเกียรติบัตร', 'error'); return; }
+        gsRun(courses => {
+            const course = courses.find(c => c.courseId === cert.courseId);
+            const certData = { ...cert, courseName: course ? course.courseName : '-', fullName: currentUser.fullName };
+            const modal = new bootstrap.Modal(document.getElementById('certModal'));
+            updateCertificatePreview(certData, 'certCanvasContainerStudent');
+            modal.show();
+        }).apiGetCourses(currentUser.userId, currentUser.role);
+    }).apiGetCertificateDetails(certNo);
+}
+
+function exportCertImage(){
+    const container = document.getElementById('certCanvasContainerStudent');
+    html2canvas(container).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `Certificate_${currentUser.fullName}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        Swal.fire({ icon:'success', title:'ดาวน์โหลดเกียรติบัตรเรียบร้อย!', timer:1500, showConfirmButton:false });
+    });
+}
+
+function handleLogout(){
+    Swal.fire({ title:'ออกจากระบบ?', icon:'question', showCancelButton:true, confirmButtonText:'ตกลง', cancelButtonText:'ยกเลิก' }).then(res => {
+        if (res.isConfirmed) {
+            currentUser = guestUser;
+            sessionStorage.removeItem('elearn_userId');
+            Swal.fire({ icon:'success', title:'ออกจากระบบแล้ว', timer:1200, showConfirmButton:false })
+                .then(() => showLogin());
+        }
+    });
+}
+</script>
 </body>
 </html>
