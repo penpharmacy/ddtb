@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบเรียนรู้ด้วยตนเอง E-Learning System (GAS + Sheets)</title>
+<title>ระบบเรียนรู้ด้วยตนเอง E-Learning Pharmacy (GAS + Sheets)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -43,8 +43,8 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 <div id="loginScreen" class="login-screen" style="display:none;">
     <div class="card card-custom p-4 p-md-5" style="max-width:420px;width:100%;">
         <div class="text-center mb-4">
-            <i class="bi bi-mortarboard-fill text-primary" style="font-size:3rem;"></i>
-            <h4 class="fw-bold text-primary mt-2" id="loginTitle">ระบบ E-Learning</h4>
+            <i class="bi bi-capsule-pill text-primary" style="font-size:3rem;"></i>
+            <h4 class="fw-bold text-primary mt-2" id="loginTitle">E-Learning Pharmacy</h4>
             <p class="text-muted fs-7">เข้าสู่ระบบเพื่อเริ่มการเรียนรู้</p>
         </div>
         <form id="formLogin">
@@ -59,13 +59,6 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
             <button type="submit" class="btn btn-primary-custom w-100 mb-2"><i class="bi bi-box-arrow-in-right me-1"></i>เข้าสู่ระบบ</button>
             <button type="button" class="btn btn-outline-secondary w-100" onclick="continueAsGuest()"><i class="bi bi-arrow-left me-1"></i>กลับไปหน้าแรก (Guest)</button>
         </form>
-        <hr>
-        <!-- <p class="text-center text-muted fs-8 mb-2">บัญชีสาธิต (Demo)</p>
-        <div class="d-grid gap-2">
-            <button class="btn btn-outline-primary btn-sm" onclick="quickLogin('admin@elearn.com','123456')">Admin: admin@elearn.com / 123456</button>
-            <button class="btn btn-outline-success btn-sm" onclick="quickLogin('teacher@elearn.com','123456')">Teacher: teacher@elearn.com / 123456</button>
-            <button class="btn btn-outline-danger btn-sm" onclick="quickLogin('student@elearn.com','123456')">Student: student@elearn.com / 123456</button>
-        </div> -->
     </div>
 </div>
 
@@ -75,7 +68,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
         <a class="navbar-brand d-flex align-items-center gap-2" href="#">
             <i class="bi bi-mortarboard-fill fs-3 text-warning"></i>
             <div>
-                <div class="fw-bold fs-5 leading-none" id="navTitle1">ระบบ E-Learning</div>
+                <div class="fw-bold fs-5 leading-none" id="navTitle1">E-Learning Pharmacy</div>
                 <small class="fs-7 opacity-75 d-block" id="navTitle2">เรียนรู้ด้วยตนเอง 24 ชม.</small>
             </div>
         </a>
@@ -198,7 +191,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 <input type="hidden" id="lessonCourseId">
 <input type="hidden" id="lessonId">
 <div class="row g-3">
-<div class="col-md-6"><label class="form-label fw-semibold">ชื่อบทเรียน</label><input type="text" class="form-control" id="lessonTitle" required placeholder="เช่น บทที่ 1: ตัวแปรและประเภทข้อมูล"></div>
+<div class="col-md-6"><label class="form-label fw-semibold">ชื่อบทเรียน</label><input type="text" class="form-control" id="lessonTitle" required placeholder="เช่น บทที่ 1: หลักการใช้ยาอย่างปลอดภัย"></div>
 <div class="col-md-3"><label class="form-label fw-semibold">ประเภท</label><select class="form-select" id="lessonType"><option value="Content">ใบความรู้ (Content)</option><option value="Video">วิดีโอ (Video)</option><option value="Worksheet">ใบงาน (Worksheet)</option></select></div>
 <div class="col-md-3"><label class="form-label fw-semibold">ลำดับที่ (Order)</label><input type="number" class="form-control" id="lessonOrder" value="1" required></div>
 <div class="col-12"><label class="form-label fw-semibold">เนื้อหา / ลิงก์</label><textarea class="form-control" id="lessonContent" rows="5" placeholder="- สำหรับ 'ใบความรู้': ใส่เนื้อหา HTML/Text&#10;- สำหรับ 'วิดีโอ': ใส่ Embed Code จาก Youtube/Vimeo&#10;- สำหรับ 'ใบงาน': ใส่ลิงก์สำหรับดาวน์โหลดไฟล์"></textarea></div>
@@ -353,7 +346,7 @@ function gsRun(successFn, failureFn){
     const runner = google.script.run
         .withSuccessHandler(res => {
             if (res === null || res === undefined) {
-                console.error('❌❌❌ ฟังก์ชันที่คืนค่า null/undefined คือ: ' + calledName + ' ❌❌❌');
+                console.error('ฟังก์ชันที่คืนค่า null/undefined คือ: ' + calledName);
                 Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', text:'เซิร์ฟเวอร์ไม่ตอบสนองข้อมูล (' + calledName + ') กรุณาลองใหม่หรือ Deploy เวอร์ชันล่าสุด' });
                 return;
             }
@@ -365,7 +358,7 @@ function gsRun(successFn, failureFn){
             }
         })
         .withFailureHandler(failureFn || (err => {
-            console.error('❌ ฟังก์ชันที่ throw error คือ: ' + calledName, err);
+            console.error('ฟังก์ชันที่ throw error คือ: ' + calledName, err);
             Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาดของระบบ', text: (err && err.message ? err.message : String(err)) + ' (' + calledName + ')' });
         }));
 
@@ -466,7 +459,7 @@ function bootApp(){
 }
 
 function updateHeaderInfo(){
-    document.getElementById('navTitle1').innerText = appConfig.title1 || 'ระบบ E-Learning';
+    document.getElementById('navTitle1').innerText = appConfig.title1 || 'E-Learning Pharmacy';
     document.getElementById('navTitle2').innerText = appConfig.title2 || 'เรียนรู้ด้วยตนเอง 24 ชม.';
     document.getElementById('announcementText').innerText = appConfig.announcement || '';
 
@@ -1136,7 +1129,11 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
 
     let settingsToRender = currentCertSettings;
     if (certData && certData.templateData) {
-        settingsToRender = JSON.parse(certData.templateData);
+        try {
+            settingsToRender = JSON.parse(certData.templateData);
+        } catch (e) {
+            settingsToRender = currentCertSettings;
+        }
     } else if (containerId === 'certCanvasContainerAdmin') {
         settingsToRender.bgUrl = document.getElementById('certBgUrl').value;
         document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
@@ -1154,8 +1151,8 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
     for (const key in settingsToRender.elements) {
         const el = settingsToRender.elements[key];
         let textContent = el.text || '';
-        if (key === 'name' && certData) textContent = certData.fullName || 'ชื่อผู้รับเกียรติบัตร';
-        if (key === 'courseTitle' && certData) textContent = certData.courseName || 'ชื่อหลักสูตร';
+        if (key === 'name') textContent = (certData && certData.fullName) ? certData.fullName : 'ชื่อผู้รับเกียรติบัตร';
+        if (key === 'courseTitle') textContent = (certData && certData.courseName) ? certData.courseName : 'ชื่อหลักสูตร';
         if (key === 'date' && certData) textContent = textContent.replace('{date}', certData.issuedAt || getThaiDateTimeStr());
         if (key === 'certNo' && certData) textContent = textContent.replace('{certNo}', certData.certificateNo || 'CERT-XXXX-YYYY');
 
@@ -1425,7 +1422,7 @@ function renderStudentMyCourses(){
                                 <td><span class="fw-bold">${e.score}%</span></td>
                                 <td><span class="badge ${e.status==='Passed'?'bg-success':e.status==='Failed'?'bg-danger':'bg-warning'}">${e.status}</span></td>
                                 <td><small class="text-muted">${e.enrolledAt}</small></td>
-                                <td class="text-center">${e.status === 'Passed' ? `<button class="btn btn-sm btn-pink-custom" onclick="downloadCert('${e.certificateNo}')"><i class="bi bi-download me-1"></i>เกียรติบัตร</button>` : `<span class="text-muted fs-8">-</span>`}</td>
+                                <td class="text-center">${e.status === 'Passed' && e.certificateNo && e.certificateNo !== '-' ? `<button class="btn btn-sm btn-pink-custom" onclick="downloadCert('${e.certificateNo}')"><i class="bi bi-download me-1"></i>เกียรติบัตร</button>` : `<span class="text-muted fs-8">-</span>`}</td>
                             </tr>`;
                         }).join('')}</tbody>
                     </table></div>
@@ -1435,9 +1432,16 @@ function renderStudentMyCourses(){
     }).apiGetMyEnrollments(currentUser.userId);
 }
 
+/**
+ * แก้ไข: รองรับผลลัพธ์รูปแบบ { success, cert } จาก apiGetCertificateDetails
+ */
 function downloadCert(certNo){
-    gsRun(cert => {
-        if (!cert) { Swal.fire('ข้อผิดพลาด', 'ไม่พบข้อมูลเกียรติบัตร', 'error'); return; }
+    gsRun(res => {
+        const cert = (res && res.cert) ? res.cert : (res && res.certificateNo ? res : null);
+        if (!cert) { 
+            Swal.fire('ข้อผิดพลาด', (res && res.message) || 'ไม่พบข้อมูลเกียรติบัตร', 'error'); 
+            return; 
+        }
         gsRun(courses => {
             const course = courses.find(c => c.courseId === cert.courseId);
             const certData = { ...cert, courseName: course ? course.courseName : '-', fullName: currentUser.fullName };
@@ -1450,7 +1454,7 @@ function downloadCert(certNo){
 
 function exportCertImage(){
     const container = document.getElementById('certCanvasContainerStudent');
-    html2canvas(container).then(canvas => {
+    html2canvas(container, { useCORS: true, scale: 2 }).then(canvas => {
         const link = document.createElement('a');
         link.download = `Certificate_${currentUser.fullName}.png`;
         link.href = canvas.toDataURL('image/png');
