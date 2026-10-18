@@ -424,6 +424,18 @@ let usersCache = [];
 let currentCertSettings = {};
 let studentState = { completedLessonIds: new Set() };
 
+const CERT_BASE_WIDTH = 1000;   // ความกว้างอ้างอิงที่ขนาดฟอนต์ในแม่แบบใช้
+let lastStudentCertData = null;
+const FRAME_STYLES = {
+    none:    'ไม่มีกรอบ',
+    single:  'เส้นเดี่ยว',
+    double:  'เส้นคู่ (ค่าเริ่มต้น)',
+    thick:   'เส้นหนา + เส้นบาง',
+    dashed:  'เส้นประ',
+    gold:    'เส้นทึบ + เส้นคู่สีทอง',
+    rounded: 'ขอบโค้งมน'
+};
+    
 function getThaiDateTimeStr(dateObj = new Date()){
     const p = {};
     new Intl.DateTimeFormat('en-GB', {
