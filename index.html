@@ -434,6 +434,7 @@ let currentCertSettings = {};
 let studentState = { completedLessonIds: new Set() };
 
 const CERT_BASE_WIDTH = 1000;   // ความกว้างอ้างอิงที่ขนาดฟอนต์ในแม่แบบใช้
+const CERT_USE_LATEST_TEMPLATE = true; // true = ใบที่ออกไปแล้วใช้แม่แบบล่าสุด (เห็นลายเซ็นที่เพิ่มใหม่ทันที) / false = ใช้แม่แบบ ณ วันที่ออกใบ
 let lastStudentCertData = null;
 const FRAME_STYLES = {
     none:    'ไม่มีกรอบ',
