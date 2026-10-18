@@ -1791,7 +1791,7 @@ function downloadCert(certNo){
 
 function exportCertImage(){
     const container = document.getElementById('certCanvasContainerStudent');
-    html2canvas(container, { useCORS: true, scale: 2 }).then(canvas => {
+    html2canvas(container, { useCORS: true, scale: Math.max(2, 1600 / container.clientWidth) })
         const link = document.createElement('a');
         link.download = `Certificate_${currentUser.fullName}.png`;
         link.href = canvas.toDataURL('image/png');
