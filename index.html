@@ -1143,7 +1143,7 @@ function renderTeacherCourses(){
                             <div class="card-footer bg-light border-0 p-3 d-flex justify-content-between">
                                 <button class="btn btn-sm btn-outline-primary" onclick="openLessonManager('${c.courseId}')"><i class="bi bi-book me-1"></i>เนื้อหา & ข้อสอบ</button>
                                 <div>
-                                    <button class="btn btn-sm btn-outline-warning me-1" onclick="openCertificateSettingsModal('${c.courseId}')"><i class="bi bi-award"></i></button>
+                                  ${currentUser.role === 'Admin' ? `<button class="btn btn-sm btn-outline-warning me-1" onclick="openCertificateSettingsModal('${c.courseId}')"><i class="bi bi-award"></i></button>` : ''}
                                     <button class="btn btn-sm btn-outline-secondary me-1" onclick="openCourseModal('${c.courseId}')"><i class="bi bi-pencil"></i></button>
                                     <button class="btn btn-sm btn-outline-danger" onclick="deleteCourse('${c.courseId}')"><i class="bi bi-trash"></i></button>
                                 </div>
