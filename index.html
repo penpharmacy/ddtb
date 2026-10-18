@@ -1529,6 +1529,8 @@ function handleCertRecipientsImport(){
 function saveCertificateSettings(){
     const courseId = document.getElementById('certSettingsCourseId').value;
     currentCertSettings.bgUrl = document.getElementById('certBgUrl').value;
+    currentCertSettings.frame = document.getElementById('certFrame').value;
+currentCertSettings.frameColor = document.getElementById('certFrameColor').value;
     document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
         const key = input.dataset.key, prop = input.dataset.prop;
         if (currentCertSettings.elements[key]) {
