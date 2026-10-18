@@ -1,9 +1,10 @@
-
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบเรียนรู้ด้วยตนเอง E-Learning Pharmacy (GAS + Sheets)</title>
+<title>ระบบเรียนรู้ด้วยตนเอง E-Learning Pharmacy</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3429/3429149.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +24,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 .btn-pink-custom:hover{background:linear-gradient(135deg,#DB2777 0%,#E11D48 100%);color:#fff}
 .sidebar{background:#fff;border-right:1px solid #E2E8F0;transition:all .3s ease}
 @media (min-width:768px){.sidebar{min-height:calc(100vh - 70px);position:sticky;top:70px}}
-.nav-link-custom{color:#64748B;padding:.75rem 1.25rem;border-radius:.5rem;margin-bottom:.25rem;display:flex;align-items:center;gap:.75rem;font-weight:500;transition:all .2s}
+.nav-link-custom{color:#64748B;padding:.75rem 1.25rem;border-radius:.5rem;margin-bottom:.25rem;display:flex;align-items:center;gap:.75rem;font-weight:500;transition:all .2s;text-decoration:none}
 .nav-link-custom:hover,.nav-link-custom.active{color:#1E3A8A;background:#EFF6FF;font-weight:600}
 .nav-link-custom.active{border-left:4px solid #EC4899}
 .notification-dropdown{max-height:400px;overflow-y:auto;width:350px}
@@ -32,9 +33,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 .notification-item.unread{background-color:#f8fafc}
 .notification-item .fs-8{font-size:.75rem}
 .cert-preview-container{border:1px dashed #ccc;min-height:400px}
-.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:skeleton-loading 1.5s infinite;border-radius:.25rem}
-@keyframes skeleton-loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
-@media (max-width:767.98px){.sidebar{width:100% !important;min-height:auto;border-right:none;border-bottom:1px solid #E2E8F0}.cert-inner-box{padding:15px !important}.cert-title{font-size:1.5rem !important}.cert-user-name{font-size:1.25rem !important}}
+@media (max-width:767.98px){.sidebar{width:100% !important;min-height:auto;border-right:none;border-bottom:1px solid #E2E8F0}.cert-inner-box{padding:15px !important}}
 .login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 50%,#EC4899 100%);padding:1rem}
 .auth-link{color:#2563EB;text-decoration:none;font-weight:600;cursor:pointer;font-size:.875rem}
 .auth-link:hover{color:#EC4899;text-decoration:underline}
@@ -154,7 +153,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-blue-pink sticky-top shadow-sm">
     <div class="container-fluid px-4">
         <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-            <i class="bi bi-mortarboard-fill fs-3 text-warning"></i>
+            <i class="bi bi-capsule-pill fs-3 text-warning"></i>
             <div>
                 <div class="fw-bold fs-5 leading-none" id="navTitle1">E-Learning Pharmacy</div>
                 <small class="fs-7 opacity-75 d-block" id="navTitle2">เรียนรู้ด้วยตนเอง 24 ชม.</small>
@@ -208,7 +207,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
                     </div>
                     <div>
                         <h6 class="fw-bold mb-0 text-primary">ประชาสัมพันธ์</h6>
-                        <p class="mb-0 text-muted fs-7" id="announcementText">ยินดีต้อนรับสู่ระบบ E-Learning</p>
+                        <p class="mb-0 text-muted fs-7" id="announcementText">ยินดีต้อนรับสู่ระบบ E-Learning Pharmacy</p>
                     </div>
                 </div>
                 <span class="badge bg-light text-secondary border fs-8 text-nowrap align-self-start align-self-sm-center" id="lblCurrentTime">Asia/Bangkok</span>
@@ -378,7 +377,6 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 <div class="p-3 bg-light rounded border">
 <p class="fw-semibold mb-1">คอลัมน์ที่ต้องมีใน CSV (เรียงลำดับตามนี้):</p>
 <p class="fs-8 mb-0"><code>question, optionA, optionB, optionC, optionD, correctAnswer, score</code></p>
-<p class="fs-8 mt-2 mb-0 text-muted">correctAnswer ใส่เป็นตัวอักษร A, B, C หรือ D เท่านั้น | ถ้าคำถาม/ตัวเลือกมีเครื่องหมายจุลภาค (,) ให้ครอบด้วยเครื่องหมายคำพูด "..." (Excel/Sheets จะทำให้อัตโนมัติเมื่อ Save เป็น CSV)</p>
 </div>
 <div class="d-flex justify-content-end gap-2 mt-4"><button type="button" class="btn btn-light" data-bs-dismiss="modal">ยกเลิก</button><button type="button" class="btn btn-primary-custom" onclick="handleQuizImport()">นำเข้าข้อมูล</button></div>
 </div>
@@ -412,6 +410,11 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
+// ============================================================================
+// ลิงก์ Web App (/exec) ของ Google Apps Script สำหรับเชื่อมต่อเมื่อรันบน GitHub Pages
+// ============================================================================
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzW7yF6LDdKP0TDE97xM_b0F_ibY-wxWEXdOpbHxL02dj-XFmesBESPnzVsBB6vAL11/exec";
+
 const FONT_FAMILIES = ["Noto Sans Thai","Arial","Times New Roman","Courier New","Verdana","Georgia","Impact"];
 const guestUser = { userId:"GUEST", fullName:"ผู้เยี่ยมชม", role:"Guest", email:"" };
 let currentUser = guestUser;
@@ -430,45 +433,73 @@ function getThaiDateTimeStr(dateObj = new Date()){
     return `${day}/${month}/${yearBE} ${hours}:${mins}`;
 }
 
+/**
+ * ฟังก์ชันเชื่อมต่อหลังบ้านอัตโนมัติ:
+ * - ถ้ารันบน Google Apps Script จะใช้ google.script.run
+ * - ถ้ารันบน GitHub Pages จะยิง Fetch API ไปที่ GAS_WEB_APP_URL (doPost)
+ */
 function gsRun(successFn, failureFn){
-    let calledName = 'unknown';
-    const runner = google.script.run
-        .withSuccessHandler(res => {
-            if (res === null || res === undefined) {
-                console.error('ฟังก์ชันที่คืนค่า null/undefined คือ: ' + calledName);
-                Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', text:'เซิร์ฟเวอร์ไม่ตอบสนองข้อมูล (' + calledName + ') กรุณาลองใหม่หรือ Deploy เวอร์ชันล่าสุด' });
-                return;
-            }
-            try {
-                successFn(res);
-            } catch (e) {
-                console.error('Error in success handler for ' + calledName + ':', e);
-                Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาดในหน้าเว็บ', text:e.message });
-            }
-        })
-        .withFailureHandler(failureFn || (err => {
-            console.error('ฟังก์ชันที่ throw error คือ: ' + calledName, err);
-            Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาดของระบบ', text: (err && err.message ? err.message : String(err)) + ' (' + calledName + ')' });
-        }));
+    const isNativeGas = (typeof google !== 'undefined' && google.script && google.script.run);
 
-    return new Proxy(runner, {
-        get(target, prop) {
-            const orig = target[prop];
-            if (typeof orig === 'function') {
+    if (isNativeGas) {
+        let calledName = 'unknown';
+        const runner = google.script.run
+            .withSuccessHandler(res => {
+                if (res === null || res === undefined) {
+                    Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', text:'เซิร์ฟเวอร์ไม่ตอบสนองข้อมูล (' + calledName + ')' });
+                    return;
+                }
+                if (successFn) successFn(res);
+            })
+            .withFailureHandler(failureFn || (err => {
+                Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาดของระบบ', text: (err && err.message ? err.message : String(err)) });
+            }));
+
+        return new Proxy(runner, {
+            get(target, prop) {
+                const orig = target[prop];
+                if (typeof orig === 'function') {
+                    return (...args) => {
+                        calledName = prop;
+                        return orig.apply(target, args);
+                    };
+                }
+                return orig;
+            }
+        });
+    } else {
+        return new Proxy({}, {
+            get(target, prop) {
                 return (...args) => {
-                    calledName = prop;
-                    console.log('[gsRun] Calling:', prop, 'args:', args);
-                    return orig.apply(target, args);
+                    fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({ action: prop, args: args })
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data && data.__rpcError) {
+                            throw new Error(data.message || 'Server error');
+                        }
+                        if (successFn) successFn(data);
+                    })
+                    .catch(err => {
+                        if (failureFn) {
+                            failureFn(err);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'เชื่อมต่อฐานข้อมูลไม่สำเร็จ',
+                                text: 'กรุณาตรวจสอบว่าอัปเดตโค้ด Code.gs และกด Deploy (New version) ล่าสุดแล้ว (' + err.message + ')'
+                            });
+                        }
+                    });
                 };
             }
-            return orig;
-        }
-    });
+        });
+    }
 }
 
-/**
- * เริ่มต้นระบบ: หากยังไม่ได้ล็อกอินใน sessionStorage ให้แสดงหน้า Login เป็นหน้าแรกสุดทันที
- */
 document.addEventListener('DOMContentLoaded', () => {
     const savedUserId = sessionStorage.getItem('elearn_userId');
     if (savedUserId) {
@@ -492,9 +523,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/**
- * สลับโหมดในหน้าแรก: 'login' | 'register' | 'forgot'
- */
 function switchAuthMode(mode = 'login') {
     const formLogin = document.getElementById('formLogin');
     const formRegister = document.getElementById('formRegister');
@@ -539,7 +567,7 @@ function showLogin(defaultMode = 'login'){
     gsRun(config => {
         appConfig = config || {};
         if (appConfig.title1) document.getElementById('loginTitle').innerText = appConfig.title1;
-    }).apiGetConfig();
+    }, () => {}).apiGetConfig();
 }
 
 function showApp(){
@@ -548,7 +576,6 @@ function showApp(){
     bootApp();
 }
 
-// 1. Submit Login
 document.getElementById('formLogin').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value;
@@ -556,7 +583,6 @@ document.getElementById('formLogin').addEventListener('submit', (e) => {
     doLogin(email, password);
 });
 
-// 2. Submit Register
 document.getElementById('formRegister').addEventListener('submit', (e) => {
     e.preventDefault();
     const fullName = document.getElementById('regFullName').value.trim();
@@ -574,22 +600,14 @@ document.getElementById('formRegister').addEventListener('submit', (e) => {
         if (res.success) {
             currentUser = res.user;
             sessionStorage.setItem('elearn_userId', currentUser.userId);
-            Swal.fire({
-                icon: 'success',
-                title: 'ลงทะเบียนสำเร็จ!',
-                text: res.message,
-                timer: 1800,
-                showConfirmButton: false
-            }).then(() => {
-                showApp();
-            });
+            Swal.fire({ icon: 'success', title: 'ลงทะเบียนสำเร็จ!', text: res.message, timer: 1800, showConfirmButton: false })
+                .then(() => showApp());
         } else {
             Swal.fire('ลงทะเบียนไม่สำเร็จ', res.message, 'error');
         }
     }).apiRegister({ fullName, email, password });
 });
 
-// 3. Submit Forgot Password
 document.getElementById('formForgot').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('forgotEmail').value.trim();
@@ -605,26 +623,16 @@ document.getElementById('formForgot').addEventListener('submit', (e) => {
     Swal.fire({ title:'กำลังตรวจสอบและบันทึกรหัสผ่านใหม่...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
     gsRun(res => {
         if (res.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'เปลี่ยนรหัสผ่านสำเร็จ!',
-                text: res.message,
-                confirmButtonColor: '#1E3A8A'
-            }).then(() => {
-                switchAuthMode('login');
-                document.getElementById('loginEmail').value = email;
-            });
+            Swal.fire({ icon: 'success', title: 'เปลี่ยนรหัสผ่านสำเร็จ!', text: res.message, confirmButtonColor: '#1E3A8A' })
+                .then(() => {
+                    switchAuthMode('login');
+                    document.getElementById('loginEmail').value = email;
+                });
         } else {
             Swal.fire('ไม่สามารถเปลี่ยนรหัสผ่านได้', res.message, 'error');
         }
     }).apiResetPassword({ email, fullName, newPassword });
 });
-
-function quickLogin(email, password){
-    document.getElementById('loginEmail').value = email;
-    document.getElementById('loginPassword').value = password;
-    doLogin(email, password);
-}
 
 function doLogin(email, password){
     Swal.fire({ title:'กำลังเข้าสู่ระบบ...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
@@ -637,8 +645,6 @@ function doLogin(email, password){
         } else {
             Swal.fire('เข้าสู่ระบบไม่สำเร็จ', res.message, 'error');
         }
-    }, err => {
-        Swal.fire('เกิดข้อผิดพลาด', err.message || String(err), 'error');
     }).apiLogin(email, password);
 }
 
@@ -791,7 +797,7 @@ function renderDashboard(){
                 <div class="col-lg-4"><div class="card card-custom p-4 h-100">
                     <h5 class="fw-bold text-primary mb-3"><i class="bi bi-star-fill me-2"></i>คอร์สเรียนยอดนิยม</h5>
                     <div class="list-group list-group-flush">
-                        ${stats.topCourses.map(c => `
+                        ${(stats.topCourses || []).map(c => `
                             <div class="list-group-item px-0 border-0 d-flex align-items-center gap-3">
                                 <img src="${c.coverImage}" class="rounded" width="50" height="50" style="object-fit:cover;">
                                 <div class="flex-grow-1 overflow-hidden"><h6 class="fw-semibold mb-0 text-truncate">${c.courseName}</h6><small class="text-muted fs-8">${c.teacherName} (${c.enrollmentCount} ลงทะเบียน)</small></div>
@@ -927,10 +933,10 @@ function renderAdminSheets(){
     const html = `
         <div class="card card-custom p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold text-success mb-0"><i class="bi bi-file-earmark-code-fill me-2"></i>สถานะฐานข้อมูล Google Sheets</h5>
+                <h5 class="fw-bold text-success mb-0"><i class="bi bi-file-earmark-code-fill me-2"></i>สถานะฐานข้อมูล E-learningpharmacy - Google ชีต</h5>
                 <button class="btn btn-success" onclick="executeSetupAllSheet()"><i class="bi bi-play-circle-fill me-1"></i>รัน SetupAllSheet()</button>
             </div>
-            <p class="text-muted">Code.gs ถูกติดตั้งอยู่ในโปรเจกต์ Apps Script เดียวกันกับหน้านี้แล้ว ไม่ต้องคัดลอกโค้ดไปวางซ้ำ กดปุ่มด้านบนเพื่อสร้าง/ตรวจสอบชีตที่จำเป็นทั้งหมดโดยอัตโนมัติ</p>
+            <p class="text-muted">กดปุ่มด้านบนเพื่อสร้างหรือตรวจสอบชีตทั้ง 10 ตารางในฐานข้อมูล Google Sheets พร้อมตั้งค่าบัญชี Admin เริ่มต้นโดยอัตโนมัติ</p>
             <div id="sheetsStatusContainer" class="mt-3"><div class="text-center py-4"><div class="spinner-border text-primary spinner-border-sm"></div></div></div>
         </div>`;
     document.getElementById('viewContainer').innerHTML = html;
@@ -950,9 +956,6 @@ function loadSheetsStatus(){
                     <td>${s.rowCount} แถว</td></tr>`).join('')}
                 </tbody>
             </table></div>`;
-    }, err => {
-        const container = document.getElementById('sheetsStatusContainer');
-        if (container) container.innerHTML = `<div class="alert alert-danger">โหลดสถานะไม่สำเร็จ: ${err.message}</div>`;
     }).apiGetSheetsStatus();
 }
 
@@ -961,10 +964,12 @@ function executeSetupAllSheet(){
     gsRun(res => {
         Swal.fire({ icon: res.success ? 'success' : 'error', title: res.success ? 'ดำเนินการสำเร็จ' : 'เกิดข้อผิดพลาด', text: res.message, confirmButtonColor:'#1E3A8A' });
         loadSheetsStatus();
-    }, err => { Swal.fire('เกิดข้อผิดพลาด', err.message, 'error'); }).SetupAllSheet();
+    }).SetupAllSheet();
 }
 
 let coursesCache = [];
+let lessonsCache = [];
+let quizzesCache = [];
 
 function renderTeacherCourses(){
     gsRun(courses => {
@@ -1052,9 +1057,6 @@ function deleteCourse(courseId){
         }
     });
 }
-
-let lessonsCache = [];
-let quizzesCache = [];
 
 function openLessonManager(courseId){
     currentCourseView = coursesCache.find(c => c.courseId === courseId);
@@ -1150,10 +1152,12 @@ document.getElementById('formLesson').addEventListener('submit', (e) => {
 });
 
 function deleteLesson(lessonId){
-    gsRun(res => { openLessonManager(currentCourseView.courseId); }).apiDeleteLesson(lessonId);
+    gsRun(() => openLessonManager(currentCourseView.courseId)).apiDeleteLesson(lessonId);
 }
 
 function quizLabel(index){ return String.fromCharCode(65 + index); }
+function escapeHtmlAttr(value){return String(value||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
 function renderQuizOptionEditor(existingOptions = null){
     const typeEl = document.getElementById('quizType');
     if (!typeEl) return;
@@ -1170,15 +1174,15 @@ function renderQuizOptionEditor(existingOptions = null){
         for(let i=0;i<n;i++) options.push(existingOptions && existingOptions[i] ? existingOptions[i] : {value:quizLabel(i),text:'',imageUrl:''});
     }
     if(type === 'fillblank') {
-        holder.innerHTML = '<div class="col-12"><label class="form-label fw-semibold">คำตอบที่ยอมรับ</label><input id="quizFillAnswer" class="form-control" required placeholder="ระบุคำตอบที่ถูกต้อง"><div class="form-text">ระบบตรวจคำตอบโดยไม่แยกตัวพิมพ์เล็ก/ใหญ่และตัดช่องว่างหัวท้าย</div></div>';
+        holder.innerHTML = '<div class="col-12"><label class="form-label fw-semibold">คำตอบที่ยอมรับ</label><input id="quizFillAnswer" class="form-control" required placeholder="ระบุคำตอบที่ถูกต้อง"></div>';
         correct.innerHTML = '<option value="__fill__">คำตอบที่ระบุ</option>';
         correct.value='__fill__';
         return;
     }
-    holder.innerHTML = options.map((o,i)=>`<div class="col-md-6"><div class="border rounded-3 p-3 h-100"><label class="form-label fw-semibold">ตัวเลือก ${quizLabel(i)}</label><input class="form-control mb-2 quiz-option-text" data-index="${i}" value="${escapeHtmlAttr(o.text||'')}" placeholder="ข้อความตัวเลือก"><input type="url" class="form-control quiz-option-image" data-index="${i}" value="${escapeHtmlAttr(o.imageUrl||'')}" placeholder="URL รูปภาพตัวเลือก (ถ้ามี)"><div class="form-text">ใส่ข้อความ รูปภาพ หรือทั้งสองอย่าง</div></div></div>`).join('');
+    holder.innerHTML = options.map((o,i)=>`<div class="col-md-6"><div class="border rounded-3 p-3 h-100"><label class="form-label fw-semibold">ตัวเลือก ${quizLabel(i)}</label><input class="form-control mb-2 quiz-option-text" data-index="${i}" value="${escapeHtmlAttr(o.text||'')}" placeholder="ข้อความตัวเลือก"><input type="url" class="form-control quiz-option-image" data-index="${i}" value="${escapeHtmlAttr(o.imageUrl||'')}" placeholder="URL รูปภาพตัวเลือก (ถ้ามี)"></div></div>`).join('');
     correct.innerHTML = options.map((o,i)=>`<option value="${o.value}">ข้อ ${quizLabel(i)}${type==='truefalse'?' - '+o.text:''}</option>`).join('');
 }
-function escapeHtmlAttr(value){return String(value||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
 function openQuizModal(quizId = null){
     const modal = new bootstrap.Modal(document.getElementById('quizModal'));
     document.getElementById('formQuiz').reset();
@@ -1196,7 +1200,7 @@ function openQuizModal(quizId = null){
         document.getElementById('quizScore').value = q.score || 10;
         document.getElementById('quizType').value = q.questionType || 'multiple';
         try { options = q.optionsJson ? JSON.parse(q.optionsJson) : null; } catch(e) { options = null; }
-        if (!options) options = ['A','B','C','D'].map((k,i)=>({value:k,text:q['option'+k]||'',imageUrl:''}));
+        if (!options) options = ['A','B','C','D'].map(k=>({value:k,text:q['option'+k]||'',imageUrl:''}));
         if (document.getElementById('quizType').value === 'multiple') document.getElementById('quizOptionCount').value = String(options.length || 4);
         renderQuizOptionEditor(options);
         if (q.questionType === 'fillblank') {
@@ -1206,6 +1210,7 @@ function openQuizModal(quizId = null){
     } else renderQuizOptionEditor();
     modal.show();
 }
+
 document.getElementById('formQuiz').addEventListener('submit', (e) => {
     e.preventDefault();
     const type = document.getElementById('quizType').value;
@@ -1218,7 +1223,6 @@ document.getElementById('formQuiz').addEventListener('submit', (e) => {
         const texts = [...document.querySelectorAll('.quiz-option-text')];
         const images = [...document.querySelectorAll('.quiz-option-image')];
         options = texts.map((el,i)=>({value: type==='truefalse' ? (i===0?'true':'false') : quizLabel(i), text: type==='truefalse' ? (i===0?'ถูก':'ผิด') : el.value.trim(), imageUrl: images[i]?.value.trim() || ''}));
-        if(type==='multiple' && options.some(o=>!o.text && !o.imageUrl)){ Swal.fire('กรุณากรอกตัวเลือกหรือใส่รูปภาพให้ครบ','','warning'); return; }
     }
     const quizData = {
         quizId: document.getElementById('quizId').value,
@@ -1239,7 +1243,7 @@ document.getElementById('formQuiz').addEventListener('submit', (e) => {
 });
 
 function deleteQuiz(quizId){
-    gsRun(res => { openLessonManager(currentCourseView.courseId); }).apiDeleteQuiz(quizId);
+    gsRun(() => openLessonManager(currentCourseView.courseId)).apiDeleteQuiz(quizId);
 }
 
 function openQuizImportModal(){
@@ -1251,8 +1255,7 @@ function openQuizImportModal(){
 function downloadQuizTemplate(){
     const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(
         'question,optionA,optionB,optionC,optionD,correctAnswer,score\n' +
-        '"ยาพาราเซตามอลใช้เพื่ออะไร?","บรรเทาปวดและลดไข้","รักษาการติดเชื้อแบคทีเรีย","ลดความดันโลหิต","รักษาโรคเบาหวาน",A,10\n' +
-        '"เมื่อได้รับยาปฏิชีวนะ ควรทำอย่างไร?","หยุดยาเมื่ออาการดีขึ้นเอง","ใช้ตามคำสั่งและคำแนะนำของบุคลากรทางการแพทย์","แบ่งยาให้ผู้อื่น","เพิ่มขนาดยาเอง",B,10\n'
+        '"ยาพาราเซตามอลใช้เพื่ออะไร?","บรรเทาปวดและลดไข้","รักษาการติดเชื้อแบคทีเรีย","ลดความดันโลหิต","รักษาโรคเบาหวาน",A,10\n'
     );
     const link = document.createElement("a");
     link.setAttribute("href", csvContent);
@@ -1272,11 +1275,7 @@ function handleQuizImport(){
         Swal.fire({ title:'กำลังนำเข้า...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
         gsRun(res => {
             bootstrap.Modal.getInstance(document.getElementById('quizImportModal')).hide();
-            if (res.success) {
-                Swal.fire('สำเร็จ', res.message, 'success');
-            } else {
-                Swal.fire('เกิดข้อผิดพลาด', res.message, 'error');
-            }
+            Swal.fire(res.success ? 'สำเร็จ' : 'เกิดข้อผิดพลาด', res.message, res.success ? 'success' : 'error');
             openLessonManager(currentCourseView.courseId);
         }).apiImportQuizzes(currentCourseView.courseId, csvText);
     };
@@ -1331,11 +1330,7 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
 
     let settingsToRender = currentCertSettings;
     if (certData && certData.templateData) {
-        try {
-            settingsToRender = JSON.parse(certData.templateData);
-        } catch (e) {
-            settingsToRender = currentCertSettings;
-        }
+        try { settingsToRender = JSON.parse(certData.templateData); } catch (e) { settingsToRender = currentCertSettings; }
     } else if (containerId === 'certCanvasContainerAdmin') {
         settingsToRender.bgUrl = document.getElementById('certBgUrl').value;
         document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
@@ -1381,8 +1376,7 @@ function handleCertBackgroundUpload(event){
     const courseId = document.getElementById('certSettingsCourseId').value;
     const reader = new FileReader();
     reader.onload = function(e){
-        const dataUrl = e.target.result;
-        const base64Data = dataUrl.split(',')[1];
+        const base64Data = e.target.result.split(',')[1];
         Swal.fire({ title:'กำลังอัปโหลด...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
         gsRun(res => {
             Swal.close();
@@ -1398,10 +1392,9 @@ function handleCertBackgroundUpload(event){
 }
 
 function downloadCertTemplate(){
-    const csvContent = "data:text/csv;charset=utf-8,fullName,email\nนายสมชาย ใจดี,somchai@example.com\nนางสาวมณี มีสุข,manee@example.com";
-    const encodedUri = encodeURI(csvContent);
+    const csvContent = "data:text/csv;charset=utf-8,fullName,email\nนายสมชาย ใจดี,somchai@example.com";
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
+    link.setAttribute("href", encodeURI(csvContent));
     link.setAttribute("download", "certificate_recipients_template.csv");
     document.body.appendChild(link);
     link.click();
@@ -1412,7 +1405,6 @@ function handleCertRecipientsImport(){
     const fileInput = document.getElementById('certRecipientsFile');
     if (fileInput.files.length === 0) { Swal.fire('ข้อผิดพลาด', 'กรุณาเลือกไฟล์ CSV ก่อน', 'error'); return; }
     const courseId = document.getElementById('certSettingsCourseId').value;
-    const file = fileInput.files[0];
     const reader = new FileReader();
     reader.onload = function(event){
         Swal.fire({ title:'กำลังนำเข้า...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
@@ -1420,7 +1412,7 @@ function handleCertRecipientsImport(){
             Swal.fire(res.success ? 'สำเร็จ' : 'ผิดพลาด', res.message, res.success ? 'success' : 'error');
         }).apiImportCertificateRecipients(courseId, event.target.result, currentUser.userId);
     };
-    reader.readAsText(file);
+    reader.readAsText(fileInput.files[0]);
 }
 
 function saveCertificateSettings(){
@@ -1489,12 +1481,10 @@ function startLearning(courseId){
             confirmButtonText: 'ไปหน้าเข้าสู่ระบบ / ลงทะเบียน',
             cancelButtonText: 'ยกเลิก',
             confirmButtonColor: '#1E3A8A'
-        }).then(res => {
-            if (res.isConfirmed) showLogin('login');
-        });
+        }).then(res => { if (res.isConfirmed) showLogin('login'); });
         return;
     }
-    document.getElementById('viewContainer').innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">กำลังโหลดข้อมูลคอร์สเรียน...</p></div>`;
+    document.getElementById('viewContainer').innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>`;
     gsRun(res => {
         if (!res.success) { Swal.fire('ข้อผิดพลาด', res.message, 'error'); renderStudentCatalog(); return; }
         currentCourseView = res.data.course;
@@ -1512,7 +1502,7 @@ function renderStudentLearningView(data){
     const html = `
         <div class="row g-4">
             <div class="col-lg-8">
-                <div class="card card-custom p-4 mb-4" id="lessonViewerCard">
+                <div class="card card-custom p-4 mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="fw-bold text-primary mb-0">${course.courseName}</h5>
                         <button class="btn btn-sm btn-outline-secondary" onclick="renderStudentCatalog()"><i class="bi bi-x-lg"></i> ออก</button>
@@ -1524,7 +1514,7 @@ function renderStudentLearningView(data){
                     <div class="d-flex align-items-center gap-3">
                         <div class="fw-semibold text-primary flex-shrink-0">ความคืบหน้า:</div>
                         <div class="progress flex-grow-1" style="height:10px;"><div id="lessonProgressBar" class="progress-bar bg-success" style="width:${enrollment.progress}%"></div></div>
-                        <div id="lessonProgressText" class="fw-bold text-nowrap">${completedMandatoryCount} / ${mandatoryLessons.length} (บทเรียนที่บังคับ)</div>
+                        <div id="lessonProgressText" class="fw-bold text-nowrap">${completedMandatoryCount} / ${mandatoryLessons.length}</div>
                     </div>
                 </div>
                 <div class="card card-custom p-4 bg-gradient-blue-pink text-white text-center">
@@ -1539,7 +1529,7 @@ function renderStudentLearningView(data){
                     <div class="list-group" id="studentLessonList">${lessons.map((l, index) => {
                         const isCompleted = completedLessonIds.includes(l.lessonId);
                         return `<button id="lesson-item-${l.lessonId}" class="list-group-item list-group-item-action border-0 mb-1 rounded p-3 d-flex justify-content-between align-items-center ${index===0?'active':''}" onclick="displayLesson('${l.lessonId}', this)">
-                            <span><i class="bi ${isCompleted ? 'bi-check-circle-fill text-success' : 'bi-play-circle'} me-2"></i>${l.title}${l.isMandatory ? '<span class="badge bg-danger-soft text-danger ms-2 fs-8">บังคับ</span>' : ''}</span>
+                            <span><i class="bi ${isCompleted ? 'bi-check-circle-fill text-success' : 'bi-play-circle'} me-2"></i>${l.title}</span>
                         </button>`;
                     }).join('')}</div>
                 </div>
@@ -1552,7 +1542,7 @@ function renderStudentLearningView(data){
 function renderLessonContent(lesson){
     switch(lesson.type){
         case 'Video': return `<div class="ratio ratio-16x9">${lesson.content}</div>`;
-        case 'Worksheet': return `<div class="text-center p-5 bg-light rounded"><i class="bi bi-file-earmark-arrow-down-fill fs-1 text-primary"></i><h5 class="mt-3">ใบงาน: ${lesson.title}</h5><p>คลิกเพื่อดาวน์โหลดใบงานและทำตามคำแนะนำ</p><a href="${lesson.content}" target="_blank" class="btn btn-primary-custom"><i class="bi bi-download me-1"></i>ดาวน์โหลดไฟล์</a></div>`;
+        case 'Worksheet': return `<div class="text-center p-5 bg-light rounded"><i class="bi bi-file-earmark-arrow-down-fill fs-1 text-primary"></i><h5 class="mt-3">ใบงาน: ${lesson.title}</h5><a href="${lesson.content}" target="_blank" class="btn btn-primary-custom mt-2"><i class="bi bi-download me-1"></i>ดาวน์โหลดไฟล์</a></div>`;
         default: return lesson.content;
     }
 }
@@ -1588,7 +1578,7 @@ function updateProgressUI(response, completedLessonId){
         const bar = document.getElementById('lessonProgressBar');
         const text = document.getElementById('lessonProgressText');
         if (bar) bar.style.width = `${response.newProgress}%`;
-        if (text) text.innerText = `${completedMandatoryCount} / ${mandatoryLessons.length} (บทเรียนที่บังคับ)`;
+        if (text) text.innerText = `${completedMandatoryCount} / ${mandatoryLessons.length}`;
         const btn = document.getElementById('btnStartQuiz');
         if (btn && completedMandatoryCount === mandatoryLessons.length) btn.disabled = false;
     }).apiGetLessons(currentCourseView.courseId);
@@ -1602,10 +1592,10 @@ function startQuiz(courseId){
             let opts=[]; try{opts=q.optionsJson?JSON.parse(q.optionsJson):null;}catch(e){}
             const type=q.questionType||'multiple';
             if(!opts || !opts.length) opts=['A','B','C','D'].map(k=>({value:k,text:q['option'+k]||'',imageUrl:''}));
-            const questionImage=q.questionImage?`<img src="${esc(q.questionImage)}" alt="ภาพประกอบคำถาม" class="img-fluid rounded mb-2" style="max-height:260px" onerror="this.style.display='none'">`:'';
+            const questionImage=q.questionImage?`<img src="${esc(q.questionImage)}" class="img-fluid rounded mb-2" style="max-height:260px" onerror="this.style.display='none'">`:'';
             let answerUI='';
             if(type==='fillblank') answerUI=`<input class="form-control" type="text" name="q_${esc(q.quizId)}" placeholder="พิมพ์คำตอบ" required>`;
-            else answerUI=opts.map((o,i)=>`<div class="form-check mb-2"><input class="form-check-input" type="radio" name="q_${esc(q.quizId)}" value="${esc(o.value||quizLabel(i))}" required id="opt_${esc(q.quizId)}_${i}"><label class="form-check-label" for="opt_${esc(q.quizId)}_${i}">${type==='truefalse'?'':quizLabel(i)+') '}${esc(o.text||'')}${o.imageUrl?`<div><img src="${esc(o.imageUrl)}" alt="รูปตัวเลือก" class="img-fluid rounded mt-2" style="max-height:180px" onerror="this.style.display='none'"></div>`:''}</label></div>`).join('');
+            else answerUI=opts.map((o,i)=>`<div class="form-check mb-2"><input class="form-check-input" type="radio" name="q_${esc(q.quizId)}" value="${esc(o.value||quizLabel(i))}" required id="opt_${esc(q.quizId)}_${i}"><label class="form-check-label" for="opt_${esc(q.quizId)}_${i}">${type==='truefalse'?'':quizLabel(i)+') '}${esc(o.text||'')}</label></div>`).join('');
             return `<div class="mb-4 p-3 border rounded-3 bg-light"><p class="fw-semibold mb-2">ข้อที่ ${idx+1}: ${esc(q.question)}</p>${questionImage}${answerUI}</div>`;
         }).join('')}<div class="text-center mt-4"><button type="submit" class="btn btn-primary-custom btn-lg px-5"><i class="bi bi-send-check me-1"></i>ส่งคำตอบแบบทดสอบ</button></div></form></div>`;
         document.getElementById('viewContainer').innerHTML=html;
@@ -1613,7 +1603,7 @@ function startQuiz(courseId){
             e.preventDefault(); const answersMap={};
             quizzes.forEach(q=>{const selected=document.querySelector(`[name="q_${q.quizId}"]:checked`); const text=document.querySelector(`[name="q_${q.quizId}"]:not([type="radio"])`); if(selected)answersMap[q.quizId]=selected.value; else if(text)answersMap[q.quizId]=text.value.trim();});
             Swal.fire({title:'กำลังส่งคำตอบ...',didOpen:()=>Swal.showLoading(),allowOutsideClick:false});
-            gsRun(res=>{if(res.passed){Swal.fire({icon:'success',title:'ยินดีด้วย! คุณผ่านการทดสอบ',text:`คุณได้คะแนน ${res.percentage}% (เกณฑ์ผ่านคือ ${res.passScore}%) ระบบออกเกียรติบัตรให้คุณแล้ว!`,confirmButtonText:'รับเกียรติบัตร',confirmButtonColor:'#1E3A8A'}).then(()=>renderStudentMyCourses());}else{Swal.fire({icon:'error',title:'สอบไม่ผ่านเกณฑ์',text:`คุณได้คะแนน ${res.percentage}% (เกณฑ์ผ่านคือ ${res.passScore}%) สามารถกลับไปทบทวนและทำใหม่ได้`,confirmButtonText:'ตกลง'}).then(()=>startLearning(courseId));}}).apiSubmitQuiz(currentUser.userId,courseId,answersMap);
+            gsRun(res=>{if(res.passed){Swal.fire({icon:'success',title:'ยินดีด้วย! คุณผ่านการทดสอบ',text:`คุณได้คะแนน ${res.percentage}% (เกณฑ์ผ่านคือ ${res.passScore}%)`,confirmButtonText:'รับเกียรติบัตร',confirmButtonColor:'#1E3A8A'}).then(()=>renderStudentMyCourses());}else{Swal.fire({icon:'error',title:'สอบไม่ผ่านเกณฑ์',text:`คุณได้คะแนน ${res.percentage}% (เกณฑ์ผ่านคือ ${res.passScore}%)`,confirmButtonText:'ตกลง'}).then(()=>startLearning(courseId));}}).apiSubmitQuiz(currentUser.userId,courseId,answersMap);
         });
     }).apiGetQuizzes(courseId);
 }
@@ -1647,10 +1637,7 @@ function renderStudentMyCourses(){
 function downloadCert(certNo){
     gsRun(res => {
         const cert = (res && res.cert) ? res.cert : (res && res.certificateNo ? res : null);
-        if (!cert) { 
-            Swal.fire('ข้อผิดพลาด', (res && res.message) || 'ไม่พบข้อมูลเกียรติบัตร', 'error'); 
-            return; 
-        }
+        if (!cert) { Swal.fire('ข้อผิดพลาด', (res && res.message) || 'ไม่พบข้อมูลเกียรติบัตร', 'error'); return; }
         gsRun(courses => {
             const course = courses.find(c => c.courseId === cert.courseId);
             const certData = { ...cert, courseName: course ? course.courseName : '-', fullName: currentUser.fullName };
