@@ -1447,69 +1447,123 @@ function openCertificateSettingsModal(courseId){
     }).apiGetCourseCertificateSettings(courseId);
 }
 
+function readCertInputsInto(s){
+    document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
+        const key = input.dataset.key, prop = input.dataset.prop;
+        if (!s.elements || !s.elements[key]) return;
+        let v;
+        if (input.type === 'checkbox') v = input.checked;
+        else if (input.type === 'number') { v = parseFloat(input.value); if (isNaN(v)) return; }
+        else v = input.value;
+        s.elements[key][prop] = v;
+    });
+}
+
 function renderCertTextSettingsForm(elements){
     const container = document.getElementById('certTextSettings');
-    container.innerHTML = '';
-    for (const key in elements) {
+    const upd = "updateCertificatePreview(null,'certCanvasContainerAdmin')";
+    const names = { title:'ชื่อเกียรติบัตร', subTitle:'คำบรรยายเกียรติบัตร', introText:'ข้อความนำ', name:'ชื่อผู้รับ', courseIntro:'ข้อความก่อนชื่อคอร์ส', courseTitle:'ชื่อคอร์ส', date:'วันที่ออก', certNo:'เลขที่เกียรติบัตร' };
+    const num = (key, prop, label, val, min, max, col) => `<div class="${col}"><label class="form-label fs-7">${label}</label><input type="number" step="1" class="form-control form-control-sm" data-key="${key}" data-prop="${prop}" value="${val}" min="${min}" max="${max}" oninput="${upd}"></div>`;
+
+    container.innerHTML = Object.keys(elements).map(key => {
         const el = elements[key];
-        const isStaticText = ['title','subTitle','introText','courseIntro'].includes(key);
-        const label = { title:'ชื่อเกียรติบัตร', subTitle:'คำบรรยายเกียรติบัตร', introText:'ข้อความนำ', name:'ชื่อผู้รับ', courseIntro:'ข้อความก่อนชื่อคอร์ส', courseTitle:'ชื่อคอร์ส', date:'วันที่ออก', certNo:'เลขที่เกียรติบัตร' }[key] || key;
-        container.innerHTML += `
-            <div class="mb-3 p-2 border rounded bg-light">
-                <h6 class="fw-semibold text-secondary mb-2">${label}</h6>
-                ${isStaticText ? `<div class="mb-2"><label class="form-label fs-7">ข้อความ</label><input type="text" class="form-control form-control-sm" data-key="${key}" data-prop="text" value="${el.text || ''}" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>` : ''}
-                <div class="row g-2">
-                    <div class="col-md-4"><label class="form-label fs-7">Font</label><select class="form-select form-select-sm" data-key="${key}" data-prop="font" onchange="updateCertificatePreview(null,'certCanvasContainerAdmin')">${FONT_FAMILIES.map(f => `<option value="${f}" ${el.font === f ? 'selected' : ''}>${f}</option>`).join('')}</select></div>
-                    <div class="col-md-2"><label class="form-label fs-7">Size</label><input type="number" class="form-control form-control-sm" data-key="${key}" data-prop="size" value="${el.size}" min="10" max="100" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
-                    <div class="col-md-2"><label class="form-label fs-7">Color</label><input type="color" class="form-control form-control-sm form-control-color" data-key="${key}" data-prop="color" value="${el.color}" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
-                    <div class="col-md-1"><label class="form-label fs-7">X (%)</label><input type="number" class="form-control form-control-sm" data-key="${key}" data-prop="x" value="${el.x}" min="0" max="100" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
-                    <div class="col-md-1"><label class="form-label fs-7">Y (%)</label><input type="number" class="form-control form-control-sm" data-key="${key}" data-prop="y" value="${el.y}" min="0" max="100" oninput="updateCertificatePreview(null,'certCanvasContainerAdmin')"></div>
-                    <div class="col-md-2"><label class="form-label fs-7">Align</label><select class="form-select form-select-sm" data-key="${key}" data-prop="align" onchange="updateCertificatePreview(null,'certCanvasContainerAdmin')"><option value="left" ${el.align==='left'?'selected':''}>ซ้าย</option><option value="center" ${el.align==='center'?'selected':''}>กลาง</option><option value="right" ${el.align==='right'?'selected':''}>ขวา</option></select></div>
-                </div>
-            </div>`;
-    }
+        const isCustom = key.indexOf('custom_') === 0;
+        const isImage = el.type === 'image';
+        const label = names[key] || el.label || key;
+        const head = `<div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-semibold text-secondary mb-0"><i class="bi ${isImage ? 'bi-image' : isCustom ? 'bi-pencil-square' : 'bi-type'} me-1"></i>${escapeHtmlAttr(label)}</h6>
+            ${isCustom ? `<button type="button" class="btn btn-sm btn-outline-danger" onclick="removeCertElement('${key}')"><i class="bi bi-trash"></i></button>` : ''}</div>`;
+
+        if (isImage) {
+            return `<div class="mb-3 p-2 border rounded bg-light">${head}
+                <div class="mb-2"><label class="form-label fs-7">URL รูปภาพ (แนะนำ PNG พื้นโปร่งใส)</label><input type="url" class="form-control form-control-sm" data-key="${key}" data-prop="url" value="${escapeHtmlAttr(el.url || '')}" oninput="${upd}"></div>
+                <div class="mb-2"><label class="form-label fs-7">หรืออัปโหลดรูป</label><input type="file" accept="image/*" class="form-control form-control-sm" onchange="uploadCertElementImage('${key}', this)"></div>
+                <div class="row g-2">${num(key,'w','กว้าง (%)', el.w ?? 20, 5, 100, 'col-4')}${num(key,'x','X (%)', el.x, 0, 100, 'col-4')}${num(key,'y','Y (%)', el.y, 0, 100, 'col-4')}</div></div>`;
+        }
+        const hasText = isCustom || ['title','subTitle','introText','courseIntro','date','certNo'].includes(key);
+        const hint = key === 'date' ? ' (ใช้ {date})' : key === 'certNo' ? ' (ใช้ {certNo})' : '';
+        return `<div class="mb-3 p-2 border rounded bg-light">${head}
+            ${hasText ? `<div class="mb-2"><label class="form-label fs-7">ข้อความ${hint}</label><textarea rows="${isCustom ? 2 : 1}" class="form-control form-control-sm" data-key="${key}" data-prop="text" oninput="${upd}">${escapeHtmlAttr(el.text || '')}</textarea></div>` : ''}
+            <div class="row g-2">
+                <div class="col-md-4"><label class="form-label fs-7">Font</label><select class="form-select form-select-sm" data-key="${key}" data-prop="font" onchange="${upd}">${FONT_FAMILIES.map(f => `<option value="${f}" ${el.font === f ? 'selected' : ''}>${f}</option>`).join('')}</select></div>
+                ${num(key,'size','Size', el.size, 8, 120, 'col-md-2')}
+                <div class="col-md-2"><label class="form-label fs-7">Color</label><input type="color" class="form-control form-control-sm form-control-color" data-key="${key}" data-prop="color" value="${el.color}" oninput="${upd}"></div>
+                ${num(key,'x','X (%)', el.x, 0, 100, 'col-md-1')}
+                ${num(key,'y','Y (%)', el.y, 0, 100, 'col-md-1')}
+                <div class="col-md-2"><label class="form-label fs-7">Align</label><select class="form-select form-select-sm" data-key="${key}" data-prop="align" onchange="${upd}"><option value="left" ${el.align==='left'?'selected':''}>ซ้าย</option><option value="center" ${el.align==='center'?'selected':''}>กลาง</option><option value="right" ${el.align==='right'?'selected':''}>ขวา</option></select></div>
+            </div>
+            <div class="row g-2 mt-1 align-items-end">
+                ${num(key,'w','กว้างกล่อง W (%)', el.w ?? 100, 5, 100, 'col-6')}
+                <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="b_${key}" data-key="${key}" data-prop="bold" ${el.bold ? 'checked' : ''} onchange="${upd}"><label class="form-check-label fs-7" for="b_${key}">ตัวหนา</label></div></div>
+            </div></div>`;
+    }).join('');
 }
 
-document.getElementById('certBgUrl').addEventListener('input', () => updateCertificatePreview(null, 'certCanvasContainerAdmin'));
-document.getElementById('certBgFile').addEventListener('change', handleCertBackgroundUpload);
-
-function applyCertFrame(container, inner, frame, color){
-    const c = color || '#1E3A8A';
-    let o;
-    switch (frame) {
-        case 'none':    o = { cb:'none', ib:'none', cr:'10px', ir:'0' }; break;
-        case 'single':  o = { cb:`4px solid ${c}`, ib:'none', cr:'6px', ir:'0' }; break;
-        case 'thick':   o = { cb:`12px solid ${c}`, ib:`2px solid ${c}`, cr:'4px', ir:'0' }; break;
-        case 'dashed':  o = { cb:`3px dashed ${c}`, ib:`2px dashed ${c}`, cr:'6px', ir:'4px' }; break;
-        case 'gold':    o = { cb:`8px solid ${c}`, ib:'4px double #C9A227', cr:'4px', ir:'0' }; break;
-        case 'rounded': o = { cb:`4px solid ${c}`, ib:`2px solid ${c}`, cr:'28px', ir:'20px' }; break;
-        default:        o = { cb:`8px double ${c}`, ib:`3px double ${c}`, cr:'10px', ir:'0' };
-    }
-    container.style.border = o.cb;
-    container.style.borderRadius = o.cr;
-    inner.style.border = o.ib;
-    inner.style.borderRadius = o.ir;
+function addCertElement(type){
+    readCertInputsInto(currentCertSettings);
+    const key = 'custom_' + Date.now();
+    currentCertSettings.elements[key] = type === 'image'
+        ? { type:'image', label:'รูปภาพ/ลายเซ็น', url:'', w:30, x:75, y:82 }
+        : { type:'text', label:'ข้อความเพิ่มเติม', text:'ข้อความใหม่', font:'Noto Sans Thai', size:20, color:'#333333', x:75, y:92, w:30, align:'center', bold:false };
+    renderCertTextSettingsForm(currentCertSettings.elements);
+    updateCertificatePreview(null, 'certCanvasContainerAdmin');
 }
 
-// ดันข้อความที่ซ้อนกันลงล่าง คืนค่า true ถ้าเนื้อหาล้นกรอบด้านล่าง
+function removeCertElement(key){
+    Swal.fire({ title:'ลบรายการนี้?', icon:'warning', showCancelButton:true, confirmButtonText:'ลบ', cancelButtonText:'ยกเลิก' }).then(r => {
+        if (!r.isConfirmed) return;
+        readCertInputsInto(currentCertSettings);
+        delete currentCertSettings.elements[key];
+        renderCertTextSettingsForm(currentCertSettings.elements);
+        updateCertificatePreview(null, 'certCanvasContainerAdmin');
+    });
+}
+
+function uploadCertElementImage(key, input){
+    const file = input.files[0];
+    if (!file) return;
+    const courseId = document.getElementById('certSettingsCourseId').value;
+    const reader = new FileReader();
+    reader.onload = e => {
+        Swal.fire({ title:'กำลังอัปโหลด...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+        gsRun(res => {
+            Swal.close();
+            if (res.success) {
+                readCertInputsInto(currentCertSettings);
+                currentCertSettings.elements[key].url = res.url;
+                renderCertTextSettingsForm(currentCertSettings.elements);
+                updateCertificatePreview(null, 'certCanvasContainerAdmin');
+            } else Swal.fire('อัปโหลดไม่สำเร็จ', res.message, 'error');
+        }).apiUploadCertBackgroundImage(courseId, e.target.result.split(',')[1], file.type, file.name, currentUser.userId);
+    };
+    reader.readAsDataURL(file);
+}
+
+// ดันข้อความที่ซ้อนทับกันลงล่าง เฉพาะกล่องที่ทับกันในแนวนอน (ลายเซ็นซ้าย/ขวาระดับเดียวกันจะไม่ถูกดัน)
 function layoutNoOverlap(inner, nodes){
     const box = inner.getBoundingClientRect();
     const gap = 4;
-    const items = nodes
-        .map(n => ({ n, r: n.getBoundingClientRect() }))
+    const items = nodes.map(n => ({ n, r: n.getBoundingClientRect() }))
         .filter(it => it.r.height > 0)
         .sort((a, b) => a.r.top - b.r.top);
-    let prevBottom = -Infinity;
+    const placed = [];
+    let maxBottom = -Infinity;
     items.forEach(it => {
-        let top = it.r.top;
-        if (top < prevBottom + gap) {
-            const shift = prevBottom + gap - top;
-            it.n.style.marginTop = shift + 'px';
-            top += shift;
+        let top = it.r.top, moved = true;
+        while (moved) {
+            moved = false;
+            placed.forEach(p => {
+                const hOverlap = it.r.left < p.right - 1 && it.r.right > p.left + 1;
+                if (hOverlap && top < p.bottom + gap) { top = p.bottom + gap; moved = true; }
+            });
         }
-        prevBottom = top + it.r.height;
+        const shift = top - it.r.top;
+        if (shift > 0) it.n.style.marginTop = shift + 'px';
+        const bottom = top + it.r.height;
+        placed.push({ left: it.r.left, right: it.r.right, bottom });
+        maxBottom = Math.max(maxBottom, bottom);
     });
-    return prevBottom > box.bottom - 8;
+    return maxBottom > box.bottom - 8;
 }
 
 function updateCertificatePreview(certData = null, containerId = 'certCanvasContainerAdmin'){
@@ -1524,12 +1578,7 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
         s.bgUrl = document.getElementById('certBgUrl').value;
         s.frame = document.getElementById('certFrame').value;
         s.frameColor = document.getElementById('certFrameColor').value;
-        document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
-            const key = input.dataset.key, prop = input.dataset.prop;
-            if (s.elements && s.elements[key]) {
-                s.elements[key][prop] = input.type === 'number' ? parseInt(input.value) : input.value;
-            }
-        });
+        readCertInputsInto(s);
     }
     if (!s || !s.elements) return;
 
@@ -1546,6 +1595,14 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
         const nodes = [];
         for (const key in s.elements) {
             const el = s.elements[key];
+            if (el.type === 'image') {
+                if (!el.url) continue;
+                const img = document.createElement('img');
+                img.src = el.url;
+                img.style.cssText = `position:absolute;left:${el.x}%;top:${el.y}%;transform:translate(-${el.x}%,-${el.y}%);width:${el.w || 20}%;height:auto;pointer-events:none;`;
+                inner.appendChild(img);
+                continue;
+            }
             let text = el.text || '';
             if (key === 'name') text = (certData && certData.fullName) ? certData.fullName : 'ชื่อผู้รับเกียรติบัตร';
             if (key === 'courseTitle') text = (certData && certData.courseName) ? certData.courseName : 'ชื่อหลักสูตร';
@@ -1559,10 +1616,11 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
             div.style.transform = `translate(-${el.x}%, -${el.y}%)`;
             div.style.fontFamily = el.font;
             div.style.fontSize = `${Math.max(6, el.size * scale * fit)}px`;
+            if (el.bold) div.style.fontWeight = '700';
             div.style.lineHeight = '1.25';
             div.style.color = el.color;
             div.style.textAlign = el.align;
-            div.style.width = '100%';
+            div.style.width = `${el.w || 100}%`;
             div.style.whiteSpace = 'pre-wrap';
             div.style.wordBreak = 'break-word';
             div.textContent = text;
@@ -1572,7 +1630,6 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
         return nodes;
     };
 
-    // ถ้าเนื้อหายังล้น ให้ลดขนาดตัวอักษรลงทีละ 10% (สูงสุด 5 รอบ)
     let fit = 1;
     for (let i = 0; i < 5; i++) {
         const nodes = build(fit);
