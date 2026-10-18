@@ -1481,34 +1481,7 @@ function updateCertificatePreview(certData = null, containerId = 'certCanvasCont
     });
 })();
 
-    previewContainer.style.backgroundImage = settingsToRender.bgUrl ? `url(${settingsToRender.bgUrl})` : 'none';
-    previewContainer.style.backgroundColor = settingsToRender.bgUrl ? 'transparent' : '#FFFDF9';
-    innerBox.innerHTML = '';
-
-    for (const key in settingsToRender.elements) {
-        const el = settingsToRender.elements[key];
-        let textContent = el.text || '';
-        if (key === 'name') textContent = (certData && certData.fullName) ? certData.fullName : 'ชื่อผู้รับเกียรติบัตร';
-        if (key === 'courseTitle') textContent = (certData && certData.courseName) ? certData.courseName : 'ชื่อหลักสูตร';
-        if (key === 'date' && certData) textContent = textContent.replace('{date}', certData.issuedAt || getThaiDateTimeStr());
-        if (key === 'certNo' && certData) textContent = textContent.replace('{certNo}', certData.certificateNo || 'CERT-XXXX-YYYY');
-
-        const div = document.createElement('div');
-        div.style.position = 'absolute';
-        div.style.left = `${el.x}%`;
-        div.style.top = `${el.y}%`;
-        div.style.transform = `translate(-${el.x}%, -${el.y}%)`;
-        div.style.fontFamily = el.font;
-        div.style.fontSize = `${el.size}px`;
-        div.style.color = el.color;
-        div.style.textAlign = el.align;
-        div.style.width = '100%';
-        div.style.whiteSpace = 'pre-wrap';
-        div.style.wordBreak = 'break-word';
-        div.innerHTML = textContent;
-        innerBox.appendChild(div);
-    }
-}
+  
 
 function handleCertBackgroundUpload(event){
     const file = event.target.files[0];
