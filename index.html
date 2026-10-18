@@ -1669,7 +1669,7 @@ function handleCertBackgroundUpload(event){
             } else {
                 Swal.fire('อัปโหลดไม่สำเร็จ', res.message, 'error');
             }
-        }).apiUploadCertBackgroundImage(courseId, base64Data, file.type, file.name);
+       }).apiUploadCertBackgroundImage(courseId, base64Data, file.type, file.name, currentUser.userId);
     };
     reader.readAsDataURL(file);
 }
