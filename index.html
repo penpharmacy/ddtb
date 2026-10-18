@@ -1540,7 +1540,27 @@ function uploadCertElementImage(key, input){
 }
 
 // ดันข้อความที่ซ้อนทับกันลงล่าง เฉพาะกล่องที่ทับกันในแนวนอน (ลายเซ็นซ้าย/ขวาระดับเดียวกันจะไม่ถูกดัน)
-function layoutNoOverlap(inner, nodes){
+document.getElementById('certBgUrl').addEventListener('input', () => updateCertificatePreview(null, 'certCanvasContainerAdmin'));
+document.getElementById('certBgFile').addEventListener('change', handleCertBackgroundUpload);
+
+function applyCertFrame(container, inner, frame, color){
+    const c = color || '#1E3A8A';
+    let o;
+    switch (frame) {
+        case 'none':    o = { cb:'none', ib:'none', cr:'10px', ir:'0' }; break;
+        case 'single':  o = { cb:`4px solid ${c}`, ib:'none', cr:'6px', ir:'0' }; break;
+        case 'thick':   o = { cb:`12px solid ${c}`, ib:`2px solid ${c}`, cr:'4px', ir:'0' }; break;
+        case 'dashed':  o = { cb:`3px dashed ${c}`, ib:`2px dashed ${c}`, cr:'6px', ir:'4px' }; break;
+        case 'gold':    o = { cb:`8px solid ${c}`, ib:'4px double #C9A227', cr:'4px', ir:'0' }; break;
+        case 'rounded': o = { cb:`4px solid ${c}`, ib:`2px solid ${c}`, cr:'28px', ir:'20px' }; break;
+        default:        o = { cb:`8px double ${c}`, ib:`3px double ${c}`, cr:'10px', ir:'0' };
+    }
+    container.style.border = o.cb;
+    container.style.borderRadius = o.cr;
+    inner.style.border = o.ib;
+    inner.style.borderRadius = o.ir;
+}
+    function layoutNoOverlap(inner, nodes){
     const box = inner.getBoundingClientRect();
     const gap = 4;
     const items = nodes.map(n => ({ n, r: n.getBoundingClientRect() }))
