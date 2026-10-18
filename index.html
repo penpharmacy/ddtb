@@ -1324,6 +1324,8 @@ function openCertificateSettingsModal(courseId){
     gsRun(settings => {
         currentCertSettings = settings;
         document.getElementById('certBgUrl').value = currentCertSettings.bgUrl || '';
+        document.getElementById('certFrame').value = currentCertSettings.frame || 'double';
+document.getElementById('certFrameColor').value = currentCertSettings.frameColor || '#1E3A8A';
         renderCertTextSettingsForm(currentCertSettings.elements);
         updateCertificatePreview(null, 'certCanvasContainerAdmin');
         modal.show();
