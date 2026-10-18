@@ -1702,13 +1702,9 @@ function saveCertificateSettings(){
     const courseId = document.getElementById('certSettingsCourseId').value;
     currentCertSettings.bgUrl = document.getElementById('certBgUrl').value;
     currentCertSettings.frame = document.getElementById('certFrame').value;
-currentCertSettings.frameColor = document.getElementById('certFrameColor').value;
-    document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
-        const key = input.dataset.key, prop = input.dataset.prop;
-        if (currentCertSettings.elements[key]) {
-            currentCertSettings.elements[key][prop] = input.type === 'number' ? parseInt(input.value) : input.value;
-        }
-    });
+    currentCertSettings.frameColor = document.getElementById('certFrameColor').value;
+    readCertInputsInto(currentCertSettings);
+
     Swal.fire({ title:'กำลังบันทึก...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
     gsRun(res => {
         Swal.fire(res.success ? 'สำเร็จ' : 'ผิดพลาด', res.message, res.success ? 'success' : 'error');
