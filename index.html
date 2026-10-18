@@ -731,11 +731,12 @@ function renderSidebar(){
         menu.innerHTML = html;
         return;
     }
-    if (currentUser.role === 'Admin') {
+        if (currentUser.role === 'Admin') {
         html += `
             <a href="#" class="nav-link-custom" onclick="navigateTo('adminUsers', this)"><i class="bi bi-people-fill fs-5"></i> จัดการผู้ใช้ (Users)</a>
             <a href="#" class="nav-link-custom" onclick="navigateTo('adminConfig', this)"><i class="bi bi-gear-wide-connected fs-5"></i> ตั้งค่าระบบ (Config)</a>
             <a href="#" class="nav-link-custom" onclick="navigateTo('adminSheets', this)"><i class="bi bi-file-earmark-spreadsheet-fill fs-5 text-success"></i> ฐานข้อมูล Google Sheets</a>
+            <a href="#" class="nav-link-custom" onclick="navigateTo('adminDashboard', this)"><i class="bi bi-columns-gap fs-5 text-primary"></i> ตั้งค่าแดชบอร์ด</a>
         `;
     }
     if (currentUser.role === 'Teacher' || currentUser.role === 'Admin') {
