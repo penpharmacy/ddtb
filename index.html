@@ -54,8 +54,8 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
         <!-- 1. ฟอร์มเข้าสู่ระบบ (Login Form) -->
         <form id="formLogin">
             <div class="mb-3">
-                <label class="form-label fw-semibold">อีเมล</label>
-                <input type="email" class="form-control" id="loginEmail" required placeholder="you@example.com" autocomplete="username">
+                <label class="form-label fw-semibold">ชื่อผู้ใช้ หรือ อีเมล</label>
+                <input type="text" class="form-control" id="loginEmail" required placeholder="เช่น admin หรือ you@example.com" autocomplete="username">
             </div>
             <div class="mb-2">
                 <div class="d-flex justify-content-between align-items-center">
@@ -89,8 +89,8 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
                 <div class="form-text text-muted" style="font-size:0.75rem;">กรุณาระบุคำนำหน้าและชื่อ-นามสกุลจริงเพื่อใช้พิมพ์ลงบนเกียรติบัตร</div>
             </div>
             <div class="mb-3">
-                <label class="form-label fw-semibold">อีเมล (Email) <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="regEmail" required placeholder="you@example.com" autocomplete="username">
+                <label class="form-label fw-semibold">ชื่อผู้ใช้ หรือ อีเมล <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="regEmail" required placeholder="เช่น manee123 หรือ you@example.com" autocomplete="username">
             </div>
             <div class="mb-3">
                 <label class="form-label fw-semibold">กำหนดรหัสผ่าน <span class="text-danger">*</span></label>
@@ -116,11 +116,11 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
         <!-- 3. ฟอร์มลืมรหัสผ่าน / ตั้งรหัสผ่านใหม่ (Forgot Password Form) -->
         <form id="formForgot" style="display:none;">
             <div class="alert alert-info py-2 px-3 small mb-3">
-                <i class="bi bi-info-circle-fill me-1"></i>กรอกอีเมลและชื่อ-นามสกุลที่ตรงกับในระบบ เพื่อกำหนดรหัสผ่านใหม่ได้ทันที
+                <i class="bi bi-info-circle-fill me-1"></i>กรอกชื่อผู้ใช้/อีเมล และชื่อ-นามสกุลที่ตรงกับในระบบ เพื่อกำหนดรหัสผ่านใหม่ได้ทันที
             </div>
             <div class="mb-3">
-                <label class="form-label fw-semibold">อีเมลที่ลงทะเบียนไว้ <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="forgotEmail" required placeholder="you@example.com">
+                <label class="form-label fw-semibold">ชื่อผู้ใช้ หรือ อีเมลที่ลงทะเบียนไว้ <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="forgotEmail" required placeholder="เช่น admin หรือ you@example.com">
             </div>
             <div class="mb-3">
                 <label class="form-label fw-semibold">ชื่อ - นามสกุลที่ลงทะเบียนไว้ <span class="text-danger">*</span></label>
@@ -231,7 +231,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 <form id="formUser" novalidate>
 <input type="hidden" id="userId">
 <div class="mb-3"><label class="form-label fw-semibold">ชื่อ-นามสกุล</label><input type="text" class="form-control" id="userFullName" required placeholder="นายสมชาย ใจดี"></div>
-<div class="mb-3"><label class="form-label fw-semibold">อีเมล (Email)</label><input type="email" class="form-control" id="userEmail" required placeholder="somchai@example.com" autocomplete="username"></div>
+<div class="mb-3"><label class="form-label fw-semibold">ชื่อผู้ใช้ หรือ อีเมล (Username / Email)</label><input type="text" class="form-control" id="userEmail" required placeholder="เช่น admin หรือ somchai@example.com" autocomplete="username"></div>
 <div class="mb-3"><label class="form-label fw-semibold">รหัสผ่าน (Password)</label><input type="password" class="form-control" id="userPassword" placeholder="เว้นว่างถ้าไม่ต้องการเปลี่ยน" autocomplete="new-password"></div>
 <div class="mb-3"><label class="form-label fw-semibold">สิทธิ์การใช้งาน (Role)</label>
 <select class="form-select" id="userRole" required><option value="Student">Student (นักเรียน)</option><option value="Teacher">Teacher (ครู/ผู้สอน)</option><option value="Admin">Admin (ผู้ดูแลระบบ)</option></select></div>
@@ -815,7 +815,7 @@ function renderAdminUsers(){
                     <button class="btn btn-primary-custom" onclick="openUserModal()"><i class="bi bi-plus-lg me-1"></i>เพิ่มสมาชิกใหม่</button>
                 </div>
                 <div class="table-responsive"><table class="table table-hover align-middle">
-                    <thead class="table-light"><tr><th>User ID</th><th>ชื่อ-นามสกุล</th><th>อีเมล</th><th>สิทธิ์</th><th>สถานะ</th><th>เข้าสู่ระบบล่าสุด</th><th class="text-center">จัดการ</th></tr></thead>
+                    <thead class="table-light"><tr><th>User ID</th><th>ชื่อ-นามสกุล</th><th>ชื่อผู้ใช้ / อีเมล</th><th>สิทธิ์</th><th>สถานะ</th><th>เข้าสู่ระบบล่าสุด</th><th class="text-center">จัดการ</th></tr></thead>
                     <tbody>${users.map(u => `
                         <tr>
                             <td><code>${u.userId}</code></td>
