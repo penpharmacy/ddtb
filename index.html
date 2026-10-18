@@ -352,7 +352,14 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 <div class="mb-3"><label class="form-label">อัปโหลดไฟล์ CSV</label><input class="form-control" type="file" id="certRecipientsFile" accept=".csv"></div>
 <button class="btn btn-primary-custom btn-sm" onclick="handleCertRecipientsImport()"><i class="bi bi-upload me-1"></i>นำเข้าข้อมูลผู้รับ</button>
 </div>
-<div class="card card-custom p-3"><h6 class="fw-bold text-dark mb-3"><i class="bi bi-fonts me-2"></i>ปรับแต่งข้อความ</h6><div id="certTextSettings"></div></div>
+<div class="card card-custom p-3">
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+<h6 class="fw-bold text-dark mb-0"><i class="bi bi-fonts me-2"></i>ปรับแต่งข้อความและองค์ประกอบ</h6>
+<div class="d-flex gap-2">
+<button type="button" class="btn btn-sm btn-outline-primary" onclick="addCertElement('text')"><i class="bi bi-plus-lg me-1"></i>ข้อความ</button>
+<button type="button" class="btn btn-sm btn-outline-success" onclick="addCertElement('image')"><i class="bi bi-plus-lg me-1"></i>รูปภาพ/ลายเซ็น</button>
+</div></div>
+<div id="certTextSettings"></div></div>
 </div>
 <div class="col-lg-6">
 <div class="card card-custom p-3 cert-preview-container">
