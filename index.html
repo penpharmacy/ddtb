@@ -1782,6 +1782,7 @@ function downloadCert(certNo){
             const course = courses.find(c => c.courseId === cert.courseId);
             const certData = { ...cert, courseName: course ? course.courseName : '-', fullName: currentUser.fullName };
             const modal = new bootstrap.Modal(document.getElementById('certModal'));
+            lastStudentCertData = certData;
             updateCertificatePreview(certData, 'certCanvasContainerStudent');
             modal.show();
         }).apiGetCourses(currentUser.userId, currentUser.role);
