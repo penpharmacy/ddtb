@@ -1356,23 +1356,126 @@ function renderCertTextSettingsForm(elements){
 document.getElementById('certBgUrl').addEventListener('input', () => updateCertificatePreview(null, 'certCanvasContainerAdmin'));
 document.getElementById('certBgFile').addEventListener('change', handleCertBackgroundUpload);
 
-function updateCertificatePreview(certData = null, containerId = 'certCanvasContainerAdmin'){
-    const previewContainer = document.getElementById(containerId);
-    if (!previewContainer) return;
-    const innerBox = previewContainer.querySelector('.cert-inner-box');
+function applyCertFrame(container, inner, frame, color){
+    const c = color || '#1E3A8A';
+    let o;
+    switch (frame) {
+        case 'none':    o = { cb:'none', ib:'none', cr:'10px', ir:'0' }; break;
+        case 'single':  o = { cb:`4px solid ${c}`, ib:'none', cr:'6px', ir:'0' }; break;
+        case 'thick':   o = { cb:`12px solid ${c}`, ib:`2px solid ${c}`, cr:'4px', ir:'0' }; break;
+        case 'dashed':  o = { cb:`3px dashed ${c}`, ib:`2px dashed ${c}`, cr:'6px', ir:'4px' }; break;
+        case 'gold':    o = { cb:`8px solid ${c}`, ib:'4px double #C9A227', cr:'4px', ir:'0' }; break;
+        case 'rounded': o = { cb:`4px solid ${c}`, ib:`2px solid ${c}`, cr:'28px', ir:'20px' }; break;
+        default:        o = { cb:`8px double ${c}`, ib:`3px double ${c}`, cr:'10px', ir:'0' };
+    }
+    container.style.border = o.cb;
+    container.style.borderRadius = o.cr;
+    inner.style.border = o.ib;
+    inner.style.borderRadius = o.ir;
+}
 
-    let settingsToRender = currentCertSettings;
+// ดันข้อความที่ซ้อนกันลงล่าง คืนค่า true ถ้าเนื้อหาล้นกรอบด้านล่าง
+function layoutNoOverlap(inner, nodes){
+    const box = inner.getBoundingClientRect();
+    const gap = 4;
+    const items = nodes
+        .map(n => ({ n, r: n.getBoundingClientRect() }))
+        .filter(it => it.r.height > 0)
+        .sort((a, b) => a.r.top - b.r.top);
+    let prevBottom = -Infinity;
+    items.forEach(it => {
+        let top = it.r.top;
+        if (top < prevBottom + gap) {
+            const shift = prevBottom + gap - top;
+            it.n.style.marginTop = shift + 'px';
+            top += shift;
+        }
+        prevBottom = top + it.r.height;
+    });
+    return prevBottom > box.bottom - 8;
+}
+
+function updateCertificatePreview(certData = null, containerId = 'certCanvasContainerAdmin'){
+    const pc = document.getElementById(containerId);
+    if (!pc) return;
+    const inner = pc.querySelector('.cert-inner-box');
+
+    let s = currentCertSettings;
     if (certData && certData.templateData) {
-        try { settingsToRender = JSON.parse(certData.templateData); } catch (e) { settingsToRender = currentCertSettings; }
+        try { s = JSON.parse(certData.templateData); } catch (e) { s = currentCertSettings; }
     } else if (containerId === 'certCanvasContainerAdmin') {
-        settingsToRender.bgUrl = document.getElementById('certBgUrl').value;
+        s.bgUrl = document.getElementById('certBgUrl').value;
+        s.frame = document.getElementById('certFrame').value;
+        s.frameColor = document.getElementById('certFrameColor').value;
         document.querySelectorAll('#certTextSettings [data-key]').forEach(input => {
             const key = input.dataset.key, prop = input.dataset.prop;
-            if (settingsToRender.elements[key]) {
-                settingsToRender.elements[key][prop] = input.type === 'number' ? parseInt(input.value) : input.value;
+            if (s.elements && s.elements[key]) {
+                s.elements[key][prop] = input.type === 'number' ? parseInt(input.value) : input.value;
             }
         });
     }
+    if (!s || !s.elements) return;
+
+    pc.style.backgroundImage = s.bgUrl ? `url(${s.bgUrl})` : 'none';
+    pc.style.backgroundColor = s.bgUrl ? 'transparent' : '#FFFDF9';
+    applyCertFrame(pc, inner, s.frame || 'double', s.frameColor);
+
+    const scale = (pc.clientWidth || 640) / CERT_BASE_WIDTH;
+    const issued = normalizeThaiDate(certData && certData.issuedAt) || getThaiDateTimeStr();
+    const dateOnly = String(issued).split(' ')[0];
+
+    const build = fit => {
+        inner.innerHTML = '';
+        const nodes = [];
+        for (const key in s.elements) {
+            const el = s.elements[key];
+            let text = el.text || '';
+            if (key === 'name') text = (certData && certData.fullName) ? certData.fullName : 'ชื่อผู้รับเกียรติบัตร';
+            if (key === 'courseTitle') text = (certData && certData.courseName) ? certData.courseName : 'ชื่อหลักสูตร';
+            if (key === 'date') text = text.replace('{date}', dateOnly);
+            if (key === 'certNo') text = text.replace('{certNo}', (certData && certData.certificateNo) || 'CERT-XXXX-YYYY');
+
+            const div = document.createElement('div');
+            div.style.position = 'absolute';
+            div.style.left = `${el.x}%`;
+            div.style.top = `${el.y}%`;
+            div.style.transform = `translate(-${el.x}%, -${el.y}%)`;
+            div.style.fontFamily = el.font;
+            div.style.fontSize = `${Math.max(6, el.size * scale * fit)}px`;
+            div.style.lineHeight = '1.25';
+            div.style.color = el.color;
+            div.style.textAlign = el.align;
+            div.style.width = '100%';
+            div.style.whiteSpace = 'pre-wrap';
+            div.style.wordBreak = 'break-word';
+            div.textContent = text;
+            inner.appendChild(div);
+            nodes.push(div);
+        }
+        return nodes;
+    };
+
+    // ถ้าเนื้อหายังล้น ให้ลดขนาดตัวอักษรลงทีละ 10% (สูงสุด 5 รอบ)
+    let fit = 1;
+    for (let i = 0; i < 5; i++) {
+        const nodes = build(fit);
+        if (!layoutNoOverlap(inner, nodes)) break;
+        fit -= 0.1;
+    }
+}
+
+(function initCertFrameControls(){
+    const sel = document.getElementById('certFrame');
+    sel.innerHTML = Object.entries(FRAME_STYLES).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+    const refresh = () => updateCertificatePreview(null, 'certCanvasContainerAdmin');
+    sel.addEventListener('change', refresh);
+    document.getElementById('certFrameColor').addEventListener('input', refresh);
+    // กล่องที่ซ่อนอยู่วัดความกว้างไม่ได้ จึงวาดใหม่หลังโมดัลเปิดเสร็จ
+    document.getElementById('certificateSettingsModal').addEventListener('shown.bs.modal', refresh);
+    document.getElementById('certModal').addEventListener('shown.bs.modal', () => {
+        if (lastStudentCertData) updateCertificatePreview(lastStudentCertData, 'certCanvasContainerStudent');
+    });
+})();
 
     previewContainer.style.backgroundImage = settingsToRender.bgUrl ? `url(${settingsToRender.bgUrl})` : 'none';
     previewContainer.style.backgroundColor = settingsToRender.bgUrl ? 'transparent' : '#FFFDF9';
