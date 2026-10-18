@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -17,9 +17,9 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 .text-gradient{background:linear-gradient(135deg,#1E3A8A,#EC4899);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .card-custom{border:none;border-radius:1rem;box-shadow:var(--card-shadow);transition:transform .2s ease,box-shadow .2s ease;background:#fff}
 .card-custom:hover{transform:translateY(-3px);box-shadow:var(--hover-shadow)}
-.btn-primary-custom{background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 100%);border:none;color:#fff;font-weight:500;border-radius:.5rem;padding:.5rem 1.25rem}
+.btn-primary-custom{background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 100%);border:none;color:#fff;font-weight:500;border-radius:.5rem;padding:.55rem 1.25rem}
 .btn-primary-custom:hover{background:linear-gradient(135deg,#1D4ED8 0%,#2563EB 100%);color:#fff}
-.btn-pink-custom{background:linear-gradient(135deg,#EC4899 0%,#F472B6 100%);border:none;color:#fff;font-weight:500;border-radius:.5rem;padding:.5rem 1.25rem}
+.btn-pink-custom{background:linear-gradient(135deg,#EC4899 0%,#F472B6 100%);border:none;color:#fff;font-weight:500;border-radius:.5rem;padding:.55rem 1.25rem}
 .btn-pink-custom:hover{background:linear-gradient(135deg,#DB2777 0%,#E11D48 100%);color:#fff}
 .sidebar{background:#fff;border-right:1px solid #E2E8F0;transition:all .3s ease}
 @media (min-width:768px){.sidebar{min-height:calc(100vh - 70px);position:sticky;top:70px}}
@@ -36,32 +36,120 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 @keyframes skeleton-loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
 @media (max-width:767.98px){.sidebar{width:100% !important;min-height:auto;border-right:none;border-bottom:1px solid #E2E8F0}.cert-inner-box{padding:15px !important}.cert-title{font-size:1.5rem !important}.cert-user-name{font-size:1.25rem !important}}
 .login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 50%,#EC4899 100%);padding:1rem}
+.auth-link{color:#2563EB;text-decoration:none;font-weight:600;cursor:pointer;font-size:.875rem}
+.auth-link:hover{color:#EC4899;text-decoration:underline}
 </style>
 </head>
 <body>
 
-<div id="loginScreen" class="login-screen" style="display:none;">
-    <div class="card card-custom p-4 p-md-5" style="max-width:420px;width:100%;">
+<!-- ==================== หน้าแรก: เข้าสู่ระบบ / ลงทะเบียน / ลืมรหัสผ่าน ==================== -->
+<div id="loginScreen" class="login-screen" style="display:flex;">
+    <div class="card card-custom p-4 p-md-5" style="max-width:440px;width:100%;">
         <div class="text-center mb-4">
-            <i class="bi bi-capsule-pill text-primary" style="font-size:3rem;"></i>
-            <h4 class="fw-bold text-primary mt-2" id="loginTitle">E-Learning Pharmacy</h4>
-            <p class="text-muted fs-7">เข้าสู่ระบบเพื่อเริ่มการเรียนรู้</p>
+            <i class="bi bi-capsule-pill text-primary" style="font-size:3.2rem;"></i>
+            <h4 class="fw-bold text-primary mt-2 mb-1" id="loginTitle">E-Learning Pharmacy</h4>
+            <p class="text-muted small mb-0" id="authSubtitle">เข้าสู่ระบบเพื่อเริ่มการเรียนรู้</p>
         </div>
+
+        <!-- 1. ฟอร์มเข้าสู่ระบบ (Login Form) -->
         <form id="formLogin">
             <div class="mb-3">
                 <label class="form-label fw-semibold">อีเมล</label>
                 <input type="email" class="form-control" id="loginEmail" required placeholder="you@example.com" autocomplete="username">
             </div>
-            <div class="mb-3">
-                <label class="form-label fw-semibold">รหัสผ่าน</label>
-                <input type="password" class="form-control" id="loginPassword" required placeholder="รหัสผ่าน" autocomplete="current-password">
+            <div class="mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <label class="form-label fw-semibold mb-1">รหัสผ่าน</label>
+                    <a class="auth-link small" onclick="switchAuthMode('forgot')">ลืมรหัสผ่าน?</a>
+                </div>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="loginPassword" required placeholder="รหัสผ่าน" autocomplete="current-password">
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('loginPassword', this)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary-custom w-100 mb-2"><i class="bi bi-box-arrow-in-right me-1"></i>เข้าสู่ระบบ</button>
-            <button type="button" class="btn btn-outline-secondary w-100" onclick="continueAsGuest()"><i class="bi bi-arrow-left me-1"></i>กลับไปหน้าแรก (Guest)</button>
+            <button type="submit" class="btn btn-primary-custom w-100 mt-3 mb-2">
+                <i class="bi bi-box-arrow-in-right me-1"></i>เข้าสู่ระบบ
+            </button>
+            <button type="button" class="btn btn-outline-secondary w-100 mb-3" onclick="continueAsGuest()">
+                <i class="bi bi-person-walking me-1"></i>เข้าชมเว็บไซต์ทั่วไป (Guest)
+            </button>
+            <div class="text-center border-top pt-3">
+                <span class="text-muted small">ยังไม่มีบัญชีผู้ใช้งาน? </span>
+                <a class="auth-link" onclick="switchAuthMode('register')"><i class="bi bi-person-plus-fill me-1"></i>ลงทะเบียนสมาชิกใหม่</a>
+            </div>
+        </form>
+
+        <!-- 2. ฟอร์มลงทะเบียนสมาชิกใหม่ (Register Form) -->
+        <form id="formRegister" style="display:none;">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">ชื่อ - นามสกุล <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="regFullName" required placeholder="เช่น นางสาวมณี เรียนดี (ใช้แสดงบนเกียรติบัตร)">
+                <div class="form-text text-muted" style="font-size:0.75rem;">กรุณาระบุคำนำหน้าและชื่อ-นามสกุลจริงเพื่อใช้พิมพ์ลงบนเกียรติบัตร</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">อีเมล (Email) <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="regEmail" required placeholder="you@example.com" autocomplete="username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">กำหนดรหัสผ่าน <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="regPassword" required minlength="4" placeholder="อย่างน้อย 4 ตัวอักษร" autocomplete="new-password">
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('regPassword', this)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">ยืนยันรหัสผ่านอีกครั้ง <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="regConfirmPassword" required minlength="4" placeholder="กรอกรหัสผ่านซ้ำอีกครั้ง" autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn btn-pink-custom w-100 mb-2">
+                <i class="bi bi-person-check-fill me-1"></i>ยืนยันการลงทะเบียน
+            </button>
+            <button type="button" class="btn btn-outline-secondary w-100" onclick="switchAuthMode('login')">
+                <i class="bi bi-arrow-left me-1"></i>กลับไปหน้าเข้าสู่ระบบ
+            </button>
+        </form>
+
+        <!-- 3. ฟอร์มลืมรหัสผ่าน / ตั้งรหัสผ่านใหม่ (Forgot Password Form) -->
+        <form id="formForgot" style="display:none;">
+            <div class="alert alert-info py-2 px-3 small mb-3">
+                <i class="bi bi-info-circle-fill me-1"></i>กรอกอีเมลและชื่อ-นามสกุลที่ตรงกับในระบบ เพื่อกำหนดรหัสผ่านใหม่ได้ทันที
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">อีเมลที่ลงทะเบียนไว้ <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="forgotEmail" required placeholder="you@example.com">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">ชื่อ - นามสกุลที่ลงทะเบียนไว้ <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="forgotFullName" required placeholder="ระบุชื่อ-นามสกุลให้ตรงกับในระบบ">
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">ตั้งรหัสผ่านใหม่ <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="forgotNewPassword" required minlength="4" placeholder="รหัสผ่านใหม่อย่างน้อย 4 ตัวอักษร">
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('forgotNewPassword', this)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">ยืนยันรหัสผ่านใหม่ <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="forgotConfirmPassword" required minlength="4" placeholder="กรอกรหัสผ่านใหม่อีกครั้ง">
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100 mb-2">
+                <i class="bi bi-key-fill me-1"></i>บันทึกรหัสผ่านใหม่
+            </button>
+            <button type="button" class="btn btn-outline-secondary w-100" onclick="switchAuthMode('login')">
+                <i class="bi bi-arrow-left me-1"></i>กลับไปหน้าเข้าสู่ระบบ
+            </button>
         </form>
     </div>
 </div>
 
+<!-- ==================== หน้าแอปพลิเคชันหลัก ==================== -->
 <div id="mainApp" style="display:none;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-blue-pink sticky-top shadow-sm">
     <div class="container-fluid px-4">
@@ -94,7 +182,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
                 </li>
                 <li class="nav-item" id="btnLoginItem" style="display:none;">
                     <button class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="showLogin()">
-                        <i class="bi bi-box-arrow-in-right me-1"></i> เข้าสู่ระบบ
+                        <i class="bi bi-box-arrow-in-right me-1"></i> เข้าสู่ระบบ / ลงทะเบียน
                     </button>
                 </li>
                 <li class="nav-item" id="btnLogoutItem">
@@ -131,6 +219,7 @@ body{font-family:'Noto Sans Thai',sans-serif;background-color:var(--bg-soft);col
 </div>
 </div>
 
+<!-- Modals -->
 <div class="modal fade" id="userModal" tabindex="-1">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content border-0 shadow-lg rounded-4">
@@ -377,28 +466,76 @@ function gsRun(successFn, failureFn){
     });
 }
 
+/**
+ * เริ่มต้นระบบ: หากยังไม่ได้ล็อกอินใน sessionStorage ให้แสดงหน้า Login เป็นหน้าแรกสุดทันที
+ */
 document.addEventListener('DOMContentLoaded', () => {
     const savedUserId = sessionStorage.getItem('elearn_userId');
     if (savedUserId) {
         gsRun(res => {
-            if (res && res.success) { currentUser = res.user; }
-            else { sessionStorage.removeItem('elearn_userId'); currentUser = guestUser; }
-            showApp();
+            if (res && res.success) {
+                currentUser = res.user;
+                showApp();
+            } else {
+                sessionStorage.removeItem('elearn_userId');
+                currentUser = guestUser;
+                showLogin();
+            }
         }, () => {
             sessionStorage.removeItem('elearn_userId');
             currentUser = guestUser;
-            showApp();
+            showLogin();
         }).apiCheckSession(savedUserId);
     } else {
         currentUser = guestUser;
-        showApp();
+        showLogin();
     }
 });
 
-function showLogin(){
+/**
+ * สลับโหมดในหน้าแรก: 'login' | 'register' | 'forgot'
+ */
+function switchAuthMode(mode = 'login') {
+    const formLogin = document.getElementById('formLogin');
+    const formRegister = document.getElementById('formRegister');
+    const formForgot = document.getElementById('formForgot');
+    const subtitle = document.getElementById('authSubtitle');
+
+    formLogin.style.display = 'none';
+    formRegister.style.display = 'none';
+    formForgot.style.display = 'none';
+
+    if (mode === 'register') {
+        formRegister.reset();
+        formRegister.style.display = 'block';
+        subtitle.innerText = 'ลงทะเบียนสมาชิกใหม่เพื่อเริ่มเรียนและรับเกียรติบัตร';
+    } else if (mode === 'forgot') {
+        formForgot.reset();
+        formForgot.style.display = 'block';
+        subtitle.innerText = 'ยืนยันข้อมูลเพื่อกำหนดรหัสผ่านใหม่';
+    } else {
+        formLogin.reset();
+        formLogin.style.display = 'block';
+        subtitle.innerText = 'เข้าสู่ระบบเพื่อเริ่มการเรียนรู้';
+    }
+}
+
+function togglePasswordVisibility(inputId, btnEl) {
+    const input = document.getElementById(inputId);
+    const icon = btnEl.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'bi bi-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'bi bi-eye';
+    }
+}
+
+function showLogin(defaultMode = 'login'){
     document.getElementById('mainApp').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('formLogin').reset();
+    switchAuthMode(defaultMode);
     gsRun(config => {
         appConfig = config || {};
         if (appConfig.title1) document.getElementById('loginTitle').innerText = appConfig.title1;
@@ -411,11 +548,76 @@ function showApp(){
     bootApp();
 }
 
+// 1. Submit Login
 document.getElementById('formLogin').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     doLogin(email, password);
+});
+
+// 2. Submit Register
+document.getElementById('formRegister').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById('regFullName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const confirmPassword = document.getElementById('regConfirmPassword').value.trim();
+
+    if (password !== confirmPassword) {
+        Swal.fire('รหัสผ่านไม่ตรงกัน', 'กรุณากรอกรหัสผ่านและยืนยันรหัสผ่านให้ตรงกัน', 'warning');
+        return;
+    }
+
+    Swal.fire({ title:'กำลังลงทะเบียน...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        if (res.success) {
+            currentUser = res.user;
+            sessionStorage.setItem('elearn_userId', currentUser.userId);
+            Swal.fire({
+                icon: 'success',
+                title: 'ลงทะเบียนสำเร็จ!',
+                text: res.message,
+                timer: 1800,
+                showConfirmButton: false
+            }).then(() => {
+                showApp();
+            });
+        } else {
+            Swal.fire('ลงทะเบียนไม่สำเร็จ', res.message, 'error');
+        }
+    }).apiRegister({ fullName, email, password });
+});
+
+// 3. Submit Forgot Password
+document.getElementById('formForgot').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('forgotEmail').value.trim();
+    const fullName = document.getElementById('forgotFullName').value.trim();
+    const newPassword = document.getElementById('forgotNewPassword').value.trim();
+    const confirmPassword = document.getElementById('forgotConfirmPassword').value.trim();
+
+    if (newPassword !== confirmPassword) {
+        Swal.fire('รหัสผ่านไม่ตรงกัน', 'กรุณากรอกรหัสผ่านใหม่ทั้ง 2 ช่องให้ตรงกัน', 'warning');
+        return;
+    }
+
+    Swal.fire({ title:'กำลังตรวจสอบและบันทึกรหัสผ่านใหม่...', didOpen: () => Swal.showLoading(), allowOutsideClick:false });
+    gsRun(res => {
+        if (res.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'เปลี่ยนรหัสผ่านสำเร็จ!',
+                text: res.message,
+                confirmButtonColor: '#1E3A8A'
+            }).then(() => {
+                switchAuthMode('login');
+                document.getElementById('loginEmail').value = email;
+            });
+        } else {
+            Swal.fire('ไม่สามารถเปลี่ยนรหัสผ่านได้', res.message, 'error');
+        }
+    }).apiResetPassword({ email, fullName, newPassword });
 });
 
 function quickLogin(email, password){
@@ -1279,7 +1481,17 @@ function filterCourses(){
 
 function startLearning(courseId){
     if (currentUser.role === 'Guest') {
-        Swal.fire('กรุณาเข้าสู่ระบบ', 'ต้องเข้าสู่ระบบก่อนเริ่มเรียน', 'info');
+        Swal.fire({
+            title: 'กรุณาเข้าสู่ระบบ',
+            text: 'ต้องเข้าสู่ระบบหรือลงทะเบียนสมาชิกก่อนเริ่มเรียน',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'ไปหน้าเข้าสู่ระบบ / ลงทะเบียน',
+            cancelButtonText: 'ยกเลิก',
+            confirmButtonColor: '#1E3A8A'
+        }).then(res => {
+            if (res.isConfirmed) showLogin('login');
+        });
         return;
     }
     document.getElementById('viewContainer').innerHTML = `<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">กำลังโหลดข้อมูลคอร์สเรียน...</p></div>`;
@@ -1432,9 +1644,6 @@ function renderStudentMyCourses(){
     }).apiGetMyEnrollments(currentUser.userId);
 }
 
-/**
- * แก้ไข: รองรับผลลัพธ์รูปแบบ { success, cert } จาก apiGetCertificateDetails
- */
 function downloadCert(certNo){
     gsRun(res => {
         const cert = (res && res.cert) ? res.cert : (res && res.certificateNo ? res : null);
@@ -1469,7 +1678,7 @@ function handleLogout(){
             currentUser = guestUser;
             sessionStorage.removeItem('elearn_userId');
             Swal.fire({ icon:'success', title:'ออกจากระบบแล้ว', timer:1200, showConfirmButton:false })
-                .then(() => showLogin());
+                .then(() => showLogin('login'));
         }
     });
 }
