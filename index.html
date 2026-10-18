@@ -1921,11 +1921,16 @@ function downloadCert(certNo){
         if (!cert) { Swal.fire('ข้อผิดพลาด', (res && res.message) || 'ไม่พบข้อมูลเกียรติบัตร', 'error'); return; }
         gsRun(courses => {
             const course = courses.find(c => c.courseId === cert.courseId);
-            const certData = { ...cert, courseName: course ? course.courseName : '-', fullName: currentUser.fullName };
-            const modal = new bootstrap.Modal(document.getElementById('certModal'));
-            lastStudentCertData = certData;
-            updateCertificatePreview(certData, 'certCanvasContainerStudent');
-            modal.show();
+            const show = tpl => {
+                const certData = { ...cert, courseName: course ? course.courseName : '-', fullName: currentUser.fullName, templateData: tpl };
+                const modal = new bootstrap.Modal(document.getElementById('certModal'));
+                lastStudentCertData = certData;
+                updateCertificatePreview(certData, 'certCanvasContainerStudent');
+                modal.show();
+            };
+            if (CERT_USE_LATEST_TEMPLATE) {
+                gsRun(settings => show(JSON.stringify(settings)), () => show(cert.templateData)).apiGetCourseCertificateSettings(cert.courseId);
+            } else show(cert.templateData);
         }).apiGetCourses(currentUser.userId, currentUser.role);
     }).apiGetCertificateDetails(certNo);
 }
