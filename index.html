@@ -1324,6 +1324,8 @@ function openCertificateSettingsModal(courseId){
     gsRun(settings => {
         currentCertSettings = settings;
         document.getElementById('certBgUrl').value = currentCertSettings.bgUrl || '';
+        currentCertSettings.frame = document.getElementById('certFrame').value;
+currentCertSettings.frameColor = document.getElementById('certFrameColor').value;
         document.getElementById('certFrame').value = currentCertSettings.frame || 'double';
 document.getElementById('certFrameColor').value = currentCertSettings.frameColor || '#1E3A8A';
         renderCertTextSettingsForm(currentCertSettings.elements);
